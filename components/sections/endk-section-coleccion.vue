@@ -84,7 +84,7 @@
       <div class="sep"></div>
       <div class="endk-media">
         <XyzTransition xyz="fade small-25% ease-ease duration-3">
-          <div class="endk-content-media" v-if="percent > 99">
+          <div class="endk-content-media" v-show="percent > 99">
             <img src="/silla.png" alt="" />
           </div>
         </XyzTransition>
