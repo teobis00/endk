@@ -30,6 +30,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: "~/plugins/vueAnimXYZ.js" },
+    { src: "~/plugins/vueAwesome.js" },
     { src: "~/plugins/both.js" },
     { src: "~/plugins/client.js", mode: "client" },
     { src: "~/plugins/mixins.js", mode: "client" },

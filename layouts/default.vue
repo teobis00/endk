@@ -55,7 +55,9 @@ body {
         v-if="nl"
       ></div>
     </XyzTransition>
+
     <endk-menu :showMenu="nl" v-on:gotoScroll="gotoScroll"></endk-menu>
+
     <LocomotiveScroll ref="scroller" :getted-options="ops">
       <div class="endk-scroll-container">
         <!--------- Section Inicio ---------->
@@ -87,6 +89,7 @@ body {
         </div>
       </div>
     </LocomotiveScroll>
+
     <Nuxt />
   </div>
 </template>
