@@ -124,6 +124,7 @@
 
 <template>
   <section class="endk-section endk-section-inicio">
+    <img v-if="removeImage" src="/assets/img/bg_main_inicio.png" alt="" />
     <div class="endk-lain-inicio">
       <XyzTransition xyz="fade down-100% rotate-left">
         <div v-if="tstartAnim4" class="endk-inicio-figure-info">
@@ -222,6 +223,7 @@ export default {
   props: ["startAnim"],
   data() {
     return {
+      removeImage: true,
       tstartAnim: false,
       tstartAnim2: false,
       tstartAnim3: false,
@@ -245,6 +247,7 @@ export default {
   },
   watch: {
     startAnim(n) {
+      this.removeImage = false;
       setTimeout(() => {
         this.tstartAnim = true;
       }, 1000);
