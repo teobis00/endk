@@ -239,7 +239,7 @@
               <NuxtLink to="/">01. Inicio</NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/coleccion">02. Colleccion</NuxtLink>
+              <NuxtLink to="/coleccion">02. Colección</NuxtLink>
             </li>
             <li>
               <NuxtLink to="/proyectos">03. Proyectos</NuxtLink>
@@ -310,7 +310,6 @@ export default {
   },
   watch: {
     showMenu(n) {
-      console.log("LOL", n);
       setTimeout(() => {
         this.tshowMenu = true;
       }, 1000);

@@ -1,5 +1,5 @@
 export const actions = {
   nuxtServerInit({ commit }, { req }) {
-    console.log("nuxtServerInit REQ");
+    console.log("nuxtServerInit");
   },
 };
