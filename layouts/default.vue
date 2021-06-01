@@ -332,7 +332,6 @@ export default {
       });
     },
     wscroll(e) {
-      // console.log("e", e);
       this.$refs.scrollContent.scrollLeft += e.deltaY;
 
       this.$store.commit("app/setScroll", {
@@ -346,9 +345,7 @@ export default {
 
       let pos = ww > 1024 ? this.$refs[s].offsetLeft : this.$refs[s].offsetTop;
 
-      let xy = ww > 1024 ? { y: 0, x: pos } : { y: pos, x: 0 };
-
-      // console.log("window width", this.$store.getters["app/getWindowWidth"]);
+      let xy = ww > 1024 ? { y: 0, x: pos } : { y: pos - 71, x: 0 };
 
       this.$gsap.to(this.$refs.scrollContent, {
         // for construction

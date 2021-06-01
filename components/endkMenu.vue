@@ -7,6 +7,7 @@
   top: 0px;
   z-index: 100;
   transition: transform 600ms cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translateX(-71px);
 
   .endk-menu-overlay {
     width: 100vw;
@@ -209,6 +210,11 @@
     height: 70px;
     background-color: white;
     border-bottom: 1px solid #dedede;
+
+    transform: translateY(-71px);
+    &.showMenu {
+      transform: translateY(0px) !important;
+    }
     .endk-menu-container {
       width: 0vw;
       height: 100vh;
@@ -258,11 +264,7 @@
 }
 </style>
 <template>
-  <div
-    class="endk-menu"
-    style="transform: translateX(-71px);"
-    :class="{ showMenu: tshowMenu }"
-  >
+  <div class="endk-menu" :class="{ showMenu: tshowMenu }">
     <!-- style="transform:matrix(1, 0, 0, 1, -100, 0)"> -->
     <!--   Overlay -->
     <XyzTransition xyz="fade">

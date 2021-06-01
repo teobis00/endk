@@ -10,6 +10,7 @@ export default {
     parent: "",
   },
   mounted() {
+    this.$store.commit("app/setDetalleColeccionOpen", false);
     console.log("loaded coleccion");
   },
 };

@@ -12,6 +12,8 @@
     box-sizing: border-box;
     padding-left: 71px;
     background-image: url(~/assets/img/aux_bg_interior.png);
+    background-position: 0% 0%;
+    background-repeat: repeat-y;
     .coleccion-info-left {
       z-index: 50;
       width: calc(70%);

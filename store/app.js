@@ -10,9 +10,9 @@ export const state = () => ({
     },
     x: 0,
     y: 0,
-    windowWidth: 0,
-    section: "",
   },
+  windowWidth: 0,
+  section: "",
 });
 
 export const getters = {
@@ -20,7 +20,6 @@ export const getters = {
     return state.detalleColeccionOpen;
   },
   getWindowWidth(state) {
-    console.log("getting Window With", state.windowWidth);
     return state.windowWidth;
   },
   getLocomotiveOn(state) {
@@ -108,6 +107,9 @@ export const getters = {
 };
 
 export const mutations = {
+  setClenLayoutAuxiliars(state, payload) {
+    state.detalleColeccionOpen = false;
+  },
   setDetalleColeccionOpen(state, payload) {
     state.detalleColeccionOpen = payload;
   },
@@ -118,7 +120,6 @@ export const mutations = {
     state.scroll = Object.assign({}, state.scroll, payload);
   },
   setWindowWidth(state, payload) {
-    console.log("setting Window With", payload);
     state.windowWidth = payload;
   },
   setSection(state, payload) {

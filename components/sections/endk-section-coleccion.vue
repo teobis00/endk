@@ -13,7 +13,7 @@
     width: 100%;
     box-sizing: border-box;
     padding-left: calc(70px + 5%);
-    padding-right: 5%;
+
     display: grid;
     grid-template-columns: 1fr 0% 1fr;
     .endk-info {
@@ -21,10 +21,11 @@
       position: relative;
       transform: translateY(0px);
       opacity: 1;
-      transition: transform 400ms linear, opacity 400ms linear;
+      transition: transform 400ms cubic-bezier(0.65, 0, 0.35, 1),
+        opacity 400ms cubic-bezier(0.65, 0, 0.35, 1);
       will-change: transform, opacity;
       &.goup {
-        transform: translateY(-20%);
+        transform: translateY(-30%);
         opacity: 0;
       }
       h3 {
@@ -65,6 +66,9 @@
           margin-left: -5%;
         }
       }
+      .button {
+        display: none;
+      }
     }
   }
 }
@@ -80,6 +84,7 @@
         height: auto;
         h3 {
           font-size: 19px;
+          margin-bottom: 0px;
         }
         h1 {
           font-size: 51px;
@@ -91,13 +96,39 @@
           font-size: 18px;
           margin: 0;
           padding: 0;
-          line-height: 51px;
+          line-height: 42px;
         }
         p {
           margin: 0;
           padding: 0;
           line-height: 14px;
           line-height: 18px;
+        }
+        .button {
+          display: none;
+          margin: 0px auto;
+          float: none;
+        }
+      }
+      .sep {
+        display: none;
+      }
+
+      .endk-media {
+        margin-left: 0px;
+        flex-direction: column;
+        .endk-content-media {
+          img {
+            position: relative;
+            left: 0;
+            top: 0;
+            transform: translateY(0);
+            margin: 0;
+            margin-left: -25px;
+          }
+        }
+        .button {
+          display: inline-block;
         }
       }
     }
@@ -129,6 +160,9 @@
             <img src="/silla.png" alt="" />
           </div>
         </XyzTransition>
+        <button class="button" :style="style_b" v-on:click="gotoInterior">
+          Ver más
+        </button>
       </div>
     </div>
   </section>
@@ -151,9 +185,8 @@ export default {
     },
     style_b() {
       if (this.$store.getters["app/getWindowWidth"] < 1024) {
-        return { transform: `matrix(1, 0, 0, 1, 0, 1)`, opacity: 1 };
+        return true;
       }
-
       let opacity = this.percent / 100;
 
       let y = 200 - this.percent * 2;
@@ -162,12 +195,8 @@ export default {
       return { transform: `matrix(1, 0, 0, 1, 0, ${y})`, opacity };
     },
     style_p() {
-      if (process.browser) {
-        console.log("initial ", this.$store.getters["app/getWindowWidth"]);
-      }
-      if (Number(this.$store.getters["app/getWindowWidth"]) < 1024) {
-        console.log("returning for mobile");
-        return { transform: `matrix(1, 0, 0, 1, 0, 1)`, opacity: 1 };
+      if (this.$store.getters["app/getWindowWidth"] < 1024) {
+        return true;
       }
 
       let opacity = this.percent / 100;
@@ -181,6 +210,7 @@ export default {
       if (this.$store.getters["app/getWindowWidth"] < 1024) {
         return 100;
       }
+
       const percent = (this.$store.getters["app/getPInicio"].p - 50) * 2;
       return percent;
     },
@@ -200,7 +230,7 @@ export default {
       this.$store.commit("app/setDetalleColeccionOpen", true);
       setTimeout(() => {
         this.$router.push("/coleccion/detalle");
-      }, 400);
+      }, 100);
     },
   },
 };
