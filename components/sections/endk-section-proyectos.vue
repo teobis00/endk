@@ -6,9 +6,7 @@
 </style>
 
 <template>
-  <section class="endk-section endk-section-proyectos">
-    <endk-data-scroll :p="PProyectos" />
-  </section>
+  <section class="endk-section endk-section-proyectos"></section>
 </template>
 
 <script>

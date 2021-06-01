@@ -121,6 +121,14 @@
           list-style: none;
           display: inline-block;
           margin-bottom: 27px;
+
+          &.endk-logo-mobile {
+            display: none;
+          }
+          &.endk-close-menu-mobile {
+            display: none;
+          }
+
           a {
             color: #555555;
             text-decoration: none;
@@ -194,6 +202,60 @@
   --xyz-in-delay: 0.6s;
   --xyz-out-delay: -0.1s;
 }
+
+@media screen and (max-width: 1024px) {
+  .endk-menu {
+    width: 100vw;
+    height: 70px;
+    background-color: white;
+    border-bottom: 1px solid #dedede;
+    .endk-menu-container {
+      width: 0vw;
+      height: 100vh;
+
+      .endk-menu-link {
+        width: 320px;
+        ul {
+          margin-top: 0px;
+          li {
+            &.endk-logo-mobile {
+              display: inline-block;
+              figure {
+                margin: 0;
+                padding: 0;
+              }
+            }
+            &.endk-close-menu-mobile {
+              display: inline-block;
+              text-align: center;
+            }
+
+            a {
+              font-size: 28px;
+            }
+          }
+
+          button {
+            outline: none;
+            width: 70px;
+            background-color: transparent;
+            border: transparent;
+            margin-top: 10px;
+            cursor: pointer;
+            box-sizing: border-box;
+            padding: 10px 10px 20px 10px;
+          }
+        }
+      }
+      .endk-menu-info {
+        bottom: 153px;
+        .endk-logo-desktop {
+          display: none;
+        }
+      }
+    }
+  }
+}
 </style>
 <template>
   <div
@@ -235,11 +297,21 @@
       <nav class="endk-menu-link">
         <XyzTransition class="ovxyz-link-group">
           <ul v-if="isOpen">
+            <li class="endk-logo-mobile">
+              <figure>
+                <v-icon name="logo" scale="13" />
+              </figure>
+            </li>
+
             <li>
-              <NuxtLink to="/">01. Inicio</NuxtLink>
+              <NuxtLink to="/" v-on:click.native="isOpen = false"
+                >01. Inicio</NuxtLink
+              >
             </li>
             <li>
-              <NuxtLink to="/coleccion">02. Colección</NuxtLink>
+              <NuxtLink to="/coleccion" v-on:click.native="isOpen = false"
+                >02. Colección</NuxtLink
+              >
             </li>
             <li>
               <NuxtLink to="/proyectos">03. Proyectos</NuxtLink>
@@ -248,10 +320,16 @@
               <NuxtLink to="/sustentabilidad">04. Sustentabilidad</NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/nosotros">04. Nosotros</NuxtLink>
+              <NuxtLink to="/nosotros">05. Nosotros</NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/contacto">05. Contacto</NuxtLink>
+              <NuxtLink to="/contacto">06. Contacto</NuxtLink>
+            </li>
+
+            <li class="endk-close-menu-mobile">
+              <button v-on:click="isOpen = false">
+                <v-icon scale="1.4" :name="'cerrar'" />
+              </button>
             </li>
           </ul>
         </XyzTransition>
@@ -264,7 +342,7 @@
             +56 2 33402953 | +56 9 34586940 <br />
             info@endemik.cl
           </p>
-          <figure>
+          <figure class="endk-logo-desktop">
             <v-icon name="logo" scale="6.5" />
           </figure>
         </div>
@@ -295,7 +373,7 @@ export default {
       isOpen: false,
     };
   },
-  props: ["showMenu"],
+  props: ["showMenu", "scrollX"],
   methods: {
     openMenu() {
       this.isOpen = !this.isOpen;

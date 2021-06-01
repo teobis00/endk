@@ -11,7 +11,7 @@ export default {
       { hid: "description", name: "description", content: "" },
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      { rel: "icon", type: "image/x-icon", href: "/favicon32.ico" },
       {
         rel: "stylesheet",
         href:
@@ -41,7 +41,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: ["nuxt-gsap-module"],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -62,5 +62,18 @@ export default {
       // 'vee-validate/dist/rules',
       /^vue-awesome/,
     ],
+  },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        path: "/coleccion/detalle",
+        components: {
+          default: resolve(__dirname, "pages/coleccion-interior.vue"), // or routes[index].component
+        },
+      });
+    },
+  },
+  gsap: {
+    extraPlugins: { scrollTo: true },
   },
 };

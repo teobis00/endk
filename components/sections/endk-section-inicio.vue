@@ -9,6 +9,18 @@
   background-position: center right;
   background-repeat: no-repeat;
   display: flex;
+  position: relative;
+
+  .endk-inicio-figure-info {
+    left: 11px;
+    bottom: 90px;
+    position: absolute;
+    font-size: 12px;
+    font-weight: 300;
+    color: white;
+    transform: rotate(-90deg);
+  }
+
   .endk-lain-inicio {
     width: 100%;
     box-sizing: border-box;
@@ -17,15 +29,6 @@
     display: grid;
     grid-template-columns: 1.2fr auto 90px;
 
-    .endk-inicio-figure-info {
-      left: 11px;
-      bottom: 90px;
-      position: absolute;
-      font-size: 12px;
-      font-weight: 300;
-      color: white;
-      transform: rotate(-90deg);
-    }
     .endk-info {
       display: flex;
       flex-direction: column;
@@ -56,13 +59,70 @@
         .button {
           margin-top: 27px;
           float: right;
+          background-color: white;
         }
+      }
+
+      .chevron-mobile {
+        display: none;
       }
     }
     .endk-media {
       display: flex;
       justify-content: flex-end;
       align-items: center;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .endk-section-inicio {
+    background-image: url("~/assets/img/m_bg_main_inicio.png");
+    background-position: center center;
+
+    .endk-inicio-figure-info {
+      display: none;
+    }
+
+    .sep {
+      display: none;
+    }
+    .endk-lain-inicio {
+      height: 60vh;
+      padding-left: 40px;
+      padding-right: 40px;
+      grid-template-columns: 1fr;
+      .endk-info {
+        height: auto;
+        justify-content: flex-start;
+        align-items: center;
+        .aux-h4 {
+          margin-top: 40px;
+          height: auto;
+          color: #d0d0c6;
+        }
+        .aux-p {
+          height: auto;
+          p {
+            margin-top: 30px;
+            color: white;
+          }
+        }
+        .aux-button {
+          height: auto;
+          .button {
+            margin-top: 60px;
+          }
+        }
+
+        .chevron-mobile {
+          margin-top: 50px;
+          display: block;
+        }
+      }
+      .endk-media {
+        display: none;
+      }
     }
   }
 }
@@ -124,13 +184,13 @@
 
 <template>
   <section class="endk-section endk-section-inicio">
-    <img v-if="removeImage" src="/assets/img/bg_main_inicio.png" alt="" />
+    <XyzTransition xyz="fade down-100% rotate-left">
+      <div v-if="tstartAnim4" class="endk-inicio-figure-info">
+        Casa Pérez Maggi, <br />2020. Arquitectura Mathias Klotz.
+      </div>
+    </XyzTransition>
+    <img v-if="removeImage" src="~/assets/img/bg_main_inicio.png" alt="" />
     <div class="endk-lain-inicio">
-      <XyzTransition xyz="fade down-100% rotate-left">
-        <div v-if="tstartAnim4" class="endk-inicio-figure-info">
-          Casa Pérez Maggi, <br />2020. Arquitectura Mathias Klotz.
-        </div>
-      </XyzTransition>
       <div class="sep"></div>
       <div class="endk-info">
         <div class="aux-h4">
@@ -154,6 +214,11 @@
             <button class="button" v-if="tstartAnim3">Conócenos</button>
           </XyzTransition>
         </div>
+        <XyzTransition class="ovxyz-inicio-button">
+          <div class="chevron-mobile">
+            <v-icon name="chevrondown" scale="1.4" />
+          </div>
+        </XyzTransition>
       </div>
       <div class="endk-media" :style="styleCallToScroll">
         <svg
@@ -253,13 +318,13 @@ export default {
       }, 1000);
       setTimeout(() => {
         this.tstartAnim2 = true;
-      }, 1400);
+      }, 1200);
       setTimeout(() => {
         this.tstartAnim3 = true;
-      }, 1800);
+      }, 1400);
       setTimeout(() => {
         this.tstartAnim4 = true;
-      }, 2100);
+      }, 1800);
     },
   },
 };

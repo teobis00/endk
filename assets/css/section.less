@@ -1,6 +1,21 @@
 /* @import "@animxyz/core/dist/animxyz.css"; */
 
-.endk-section {
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 3px;
+}
+
+.endk-section,
+.interior {
   height: 100vh;
   display: flex;
   font-family: "Open Sans", sans-serif;
@@ -77,11 +92,21 @@
       font-size: calc(16px + 20%);
       line-height: calc(16px + 50%);
     }
+    @media screen and (max-width: 1024px) {
+      line-height: 22px;
+    }
+  }
+
+  p.desc {
+    color: #1c1c1c;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: left;
   }
 
   .button {
     text-decoration: none;
-    font-size: 22px;
+
     border-radius: 20px;
     display: inline-block;
     border: 1px solid #c4c4c4;
@@ -92,5 +117,12 @@
     min-width: 130px;
     height: 28px;
     line-height: 18px;
+
+    @media screen and (max-width: 1024px) {
+      font-size: 20px;
+      height: 35px;
+      line-height: 20px;
+      min-width: 160px;
+    }
   }
 }

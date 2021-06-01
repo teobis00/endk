@@ -17,7 +17,16 @@
     display: grid;
     grid-template-columns: 1fr 0% 1fr;
     .endk-info {
-      max-width: 640px;
+      max-width: 660px;
+      position: relative;
+      transform: translateY(0px);
+      opacity: 1;
+      transition: transform 400ms linear, opacity 400ms linear;
+      will-change: transform, opacity;
+      &.goup {
+        transform: translateY(-20%);
+        opacity: 0;
+      }
       h3 {
         margin-bottom: 15px;
       }
@@ -59,32 +68,64 @@
     }
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .endk-section-colleccion {
+    align-items: flex-start;
+    .endk-lain-collection {
+      display: inline-block;
+      padding-left: 35px;
+      .endk-info {
+        margin-top: 20px;
+        height: auto;
+        h3 {
+          font-size: 19px;
+        }
+        h1 {
+          font-size: 51px;
+          margin: 0;
+          padding: 0;
+          line-height: 51px;
+        }
+        h4 {
+          font-size: 18px;
+          margin: 0;
+          padding: 0;
+          line-height: 51px;
+        }
+        p {
+          margin: 0;
+          padding: 0;
+          line-height: 14px;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+}
 </style>
 
 <template>
   <section class="endk-section endk-section-colleccion">
-    <endk-data-scroll :p="PColleccion" v-if="debugPos" />
     <div class="endk-lain-collection">
-      <div class="endk-info">
+      <div class="endk-info" :class="{ goup: goupinfo }">
         <h3>Salone del mobile</h3>
         <h1>Milan 2022</h1>
         <h4>Apr 13, 2022 - Apr 18, 2022</h4>
         <p :style="style_p">
           La génesis de la colección nace de la inspiración en el arte del
-          diseño
-          <br />
-          con madera: un acabado simple y ensambles limpios, logran generar una
-          <br />
-          línea de diseño imperecedera, tanto desde su punto de vista estético
-          <br />
-          como desde el ámbito de la construcción.
+          diseño con madera: un acabado simple y ensambles limpios, logran
+          generar una línea de diseño imperecedera, tanto desde su punto de
+          vista estético como desde el ámbito de la construcción.
         </p>
-        <button class="button" :style="style_b">Ver más</button>
+        <button class="button" :style="style_b" v-on:click="gotoInterior">
+          Ver más
+        </button>
       </div>
       <div class="sep"></div>
       <div class="endk-media">
         <XyzTransition xyz="fade small-25% ease-ease duration-3">
-          <div class="endk-content-media" v-show="percent > 99">
+          <div class="endk-content-media" v-show="percent > 99 && !goupinfo">
             <img src="/silla.png" alt="" />
           </div>
         </XyzTransition>
@@ -105,7 +146,14 @@ export default {
     return {};
   },
   computed: {
+    goupinfo() {
+      return this.$store.getters["app/getDetalleColeccionOpen"];
+    },
     style_b() {
+      if (this.$store.getters["app/getWindowWidth"] < 1024) {
+        return { transform: `matrix(1, 0, 0, 1, 0, 1)`, opacity: 1 };
+      }
+
       let opacity = this.percent / 100;
 
       let y = 200 - this.percent * 2;
@@ -114,6 +162,14 @@ export default {
       return { transform: `matrix(1, 0, 0, 1, 0, ${y})`, opacity };
     },
     style_p() {
+      if (process.browser) {
+        console.log("initial ", this.$store.getters["app/getWindowWidth"]);
+      }
+      if (Number(this.$store.getters["app/getWindowWidth"]) < 1024) {
+        console.log("returning for mobile");
+        return { transform: `matrix(1, 0, 0, 1, 0, 1)`, opacity: 1 };
+      }
+
       let opacity = this.percent / 100;
 
       let y = 100 - this.percent;
@@ -122,6 +178,9 @@ export default {
       return { transform: `matrix(1, 0, 0, 1, 0, ${y})`, opacity };
     },
     percent() {
+      if (this.$store.getters["app/getWindowWidth"] < 1024) {
+        return 100;
+      }
       const percent = (this.$store.getters["app/getPInicio"].p - 50) * 2;
       return percent;
     },
@@ -134,6 +193,14 @@ export default {
     },
     debugPos() {
       return this.$store.getters["app/getDebugPos"];
+    },
+  },
+  methods: {
+    gotoInterior() {
+      this.$store.commit("app/setDetalleColeccionOpen", true);
+      setTimeout(() => {
+        this.$router.push("/coleccion/detalle");
+      }, 400);
     },
   },
 };

@@ -1,19 +1,34 @@
 <style lang="less">
+html {
+  height: -webkit-fill-available;
+}
+
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
+
 .endk-window-with {
   width: 100vw;
   height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  @media screen and (max-width: 1024px) {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 .endk-scroll-container {
   width: 580vw;
   height: 100vh;
   display: flex;
 
-  @media screen and (max-width: 576px) {
+  @media screen and (max-width: 1024px) {
     width: 100vw;
     height: auto;
     display: inline-block;
@@ -69,10 +84,20 @@ body {
     transform: scale(2.3);
   }
 }
+.cursor {
+  position: absolute;
+  z-index: 150;
+  transition: top 800ms ease-out, left 800ms ease-out;
+}
 </style>
 
 <template>
-  <div class="endk-window-with">
+  <div
+    class="endk-window-with"
+    ref="scrollContent"
+    v-on:wheel="wscroll"
+    v-on:scroll="bscroll"
+  >
     <XyzTransition xyz="fade">
       <div
         class="overlay_blur"
@@ -154,39 +179,45 @@ body {
       </div>
     </XyzTransition>
 
-    <endk-menu :showMenu="nl" v-on:gotoScroll="gotoScroll"></endk-menu>
+    <endk-menu
+      :showMenu="nl"
+      v-on:gotoScroll="gotoScroll"
+      :scrollX="scrollX"
+    ></endk-menu>
 
+    <!--
     <LocomotiveScroll ref="scroller" :getted-options="ops">
-      <div class="endk-scroll-container">
-        <!--------- Section Inicio ---------->
-        <div ref="inicio" class="place-section-inicio" data-scroll-section>
-          <endk-section-inicio :startAnim="nl" />
-        </div>
+    -->
 
-        <!--------- Section Coleccion ---------->
-        <div
-          ref="coleccion"
-          class="place-section-coleccion"
-          data-scroll-section
-        >
-          <div class="sep-prev-section-coleccion"></div>
-          <endk-section-coleccion />
-        </div>
-        <!--------- Section Proyectos ---------->
-        <div ref="seccion3" class="place-section-3" data-scroll-section>
-          <endk-section-3 />
-        </div>
-
-        <!--------- Section Proyectos ---------->
-        <div class="place-section-proyectos" data-scroll-section>
-          <endk-section-proyectos />
-        </div>
-        <!--------- Section Inicio ---------->
-        <div class="place-section-inicio" data-scroll-section>
-          <endk-section-inicio />
-        </div>
+    <div class="endk-scroll-container">
+      <!--------- Section Inicio ---------->
+      <div ref="index" class="place-section-inicio" data-scroll-section>
+        <endk-section-inicio :startAnim="nl" />
       </div>
+
+      <!--------- Section Coleccion ---------->
+      <div ref="coleccion" class="place-section-coleccion" data-scroll-section>
+        <div class="sep-prev-section-coleccion"></div>
+        <endk-section-coleccion />
+      </div>
+      <!--------- Section Proyectos ---------->
+      <div ref="seccion3" class="place-section-3" data-scroll-section>
+        <endk-section-3 />
+      </div>
+
+      <!--------- Section Proyectos ---------->
+      <div class="place-section-proyectos" data-scroll-section>
+        <endk-section-proyectos />
+      </div>
+      <!--------- Section Inicio ---------->
+      <div class="place-section-inicio" data-scroll-section>
+        <endk-section-inicio />
+      </div>
+    </div>
+
+    <!--
     </LocomotiveScroll>
+    -->
 
     <Nuxt />
   </div>
@@ -200,6 +231,7 @@ import endkMenu from "~/components/endkMenu";
 import endkSectionProyectos from "~/components/sections/endk-section-proyectos";
 
 export default {
+  middleware: "handle",
   components: {
     endkMenu,
     endkSectionInicio,
@@ -209,6 +241,19 @@ export default {
   },
   data() {
     return {
+      config: {
+        lerps: {
+          dot: 1,
+          circle: 0.18,
+          custom: 0.23,
+        },
+        scale: {
+          ratio: 0.18,
+          min: 0.5,
+          max: 1,
+        },
+        opacity: 0.1,
+      },
       nl: true,
       ops: {
         smooth: true,
@@ -217,12 +262,12 @@ export default {
         smartphone: {
           smooth: true,
           direction: "vertical",
-          lerp: 0.8,
+          lerp: 0.3,
         },
         tablet: {
           smooth: true,
-          direction: "horizontal",
-          lerp: 0.2,
+          direction: "vertical",
+          lerp: 0.3,
         },
       },
     };
@@ -234,13 +279,45 @@ export default {
         this.nl = false;
       });
     }
-    // this.$store.commit("app/setWindowWidth", window.innerWidth);
+    this.$store.commit("app/setWindowWidth", window.innerWidth);
     this.$nextTick(function() {
       // this.$nuxt.$loading.start();
       // setTimeout(() => this.$nuxt.$loading.finish(), 500);
       this.onResize();
     });
     window.addEventListener("resize", this.onResize);
+
+    this.$store.commit("app/setScroll", { x: 0, y: 0 });
+
+    /*---- Handle scrollTo base on PATH ---- */
+
+    this.$store.subscribe((mutation, state) => {
+      //   // catch only app/Section type mutation
+      if (mutation.type === "app/setSection") {
+        console.log("mutation payload", mutation.payload);
+
+        const gSection =
+          mutation.payload.hasOwnProperty("parent") &&
+          mutation.payload.parent !== ""
+            ? mutation.payload.parent
+            : mutation.payload.section;
+
+        this.gotoScroll(gSection);
+      }
+    });
+
+    /* Execute if url section != from index */
+    if (this.$store.getters["app/getSection"].section !== "index") {
+      setTimeout(() => {
+        const gSection =
+          this.$store.getters["app/getSection"].hasOwnProperty("parent") &&
+          this.$store.getters["app/getSection"].parent !== ""
+            ? this.$store.getters["app/getSection"].parent
+            : this.$store.getters["app/getSection"].section;
+        this.gotoScroll(gSection);
+      }, 1800);
+    }
+    /* ------------------------------------- */
   },
   computed: {
     scrollX() {
@@ -248,10 +325,36 @@ export default {
     },
   },
   methods: {
+    bscroll(e) {
+      this.$store.commit("app/setScroll", {
+        x: this.$refs.scrollContent.scrollLeft,
+        y: 0,
+      });
+    },
+    wscroll(e) {
+      // console.log("e", e);
+      this.$refs.scrollContent.scrollLeft += e.deltaY;
+
+      this.$store.commit("app/setScroll", {
+        x: this.$refs.scrollContent.scrollLeft,
+        y: 0,
+      });
+    },
     gotoScroll(s) {
-      this.$refs.scroller.locomotive.scrollTo(this.$refs[s], {
-        disableLerp: true,
-        duration: 600,
+      console.log("s", s);
+      const ww = this.$store.getters["app/getWindowWidth"];
+
+      let pos = ww > 1024 ? this.$refs[s].offsetLeft : this.$refs[s].offsetTop;
+
+      let xy = ww > 1024 ? { y: 0, x: pos } : { y: pos, x: 0 };
+
+      // console.log("window width", this.$store.getters["app/getWindowWidth"]);
+
+      this.$gsap.to(this.$refs.scrollContent, {
+        // for construction
+        // duration: 0,
+        duration: 0.6,
+        scrollTo: xy,
       });
     },
     onResize() {
@@ -260,7 +363,7 @@ export default {
   },
   watch: {
     $route(r) {
-      console.log("variable", r);
+      // console.log("variable", r);
     },
   },
 };

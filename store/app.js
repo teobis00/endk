@@ -1,5 +1,7 @@
 export const state = () => ({
-  debugPos: true,
+  detalleColeccionOpen: false,
+  locomotiveOn: true,
+  debugPos: false,
   scroll: {
     isScrolling: false,
     limit: {
@@ -9,11 +11,26 @@ export const state = () => ({
     x: 0,
     y: 0,
     windowWidth: 0,
+    section: "",
   },
 });
 
 export const getters = {
-  getDebugPos() {
+  getDetalleColeccionOpen(state) {
+    return state.detalleColeccionOpen;
+  },
+  getWindowWidth(state) {
+    console.log("getting Window With", state.windowWidth);
+    return state.windowWidth;
+  },
+  getLocomotiveOn(state) {
+    return state.locomotiveOn;
+  },
+  getSection(state) {
+    // console.log("getter getSection", state.section);
+    return state.section;
+  },
+  getDebugPos(state) {
     return state.debugPos;
   },
   getX(state) {
@@ -91,10 +108,20 @@ export const getters = {
 };
 
 export const mutations = {
+  setDetalleColeccionOpen(state, payload) {
+    state.detalleColeccionOpen = payload;
+  },
+  setLocomotiveOn(state, payload) {
+    state.locomotiveOn = payload;
+  },
   setScroll: (state, payload) => {
     state.scroll = Object.assign({}, state.scroll, payload);
   },
   setWindowWidth(state, payload) {
+    console.log("setting Window With", payload);
     state.windowWidth = payload;
+  },
+  setSection(state, payload) {
+    state.section = payload;
   },
 };
