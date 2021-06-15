@@ -1,4 +1,16 @@
 <style lang="less">
+:root {
+  --itemDuration: 800ms;
+
+  --xDirectionA: -7%;
+  --itemScaleA: 1;
+
+  --xDirectionB: -7%;
+  --itemScaleB: 0.8;
+
+  --easingA: ease-in;
+  --easingB: ease-out;
+}
 .coleccion-interior {
   position: fixed;
   width: calc(100vw);
@@ -56,14 +68,34 @@
         }
       }
       .place-media {
+        overflow: hidden;
         width: 100%;
         height: 45%;
-        display: inline-block;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-top: 20px;
         margin-bottom: 10px;
+        position: relative;
         img {
           height: 100%;
+        }
+        .aux-floating-image {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img {
+            height: 100%;
+          }
+        }
+
+        @media screen and (max-height: 740px) {
+          height: 40%;
         }
       }
       .place-subtitle {
@@ -91,6 +123,11 @@
         z-index: 60;
         left: 0px;
         bottom: 0px;
+
+        @media screen and (max-height: 740px) {
+          height: 105px;
+        }
+
         .endk-carousel-coleccion {
           display: grid;
           grid-template-columns: 1fr 6fr 1fr;
@@ -137,6 +174,83 @@
     }
   }
 }
+
+.ovxyz-media-a {
+  --xyz-translate-y: 0;
+  --xyz-translate-x: var(--xDirectionA);
+  --xyz-scale-x: var(--itemScaleA);
+  --xyz-scale-y: var(--itemScaleA);
+  --xyz-opacity: 0;
+  --xyz-duration: var(--itemDuration);
+  --xyz-ease: ease-in;
+}
+
+.ovxyz-media-b {
+  --xyz-translate-y: 0;
+  --xyz-translate-x: var(--xDirectionB);
+  --xyz-scale-x: var(--itemScaleB);
+  --xyz-scale-y: var(--itemScaleB);
+  --xyz-opacity: 0;
+  --xyz-duration: var(--itemDuration);
+  --xyz-ease: ease-out;
+}
+@media screen and (max-width: 1024px) {
+  .coleccion-interior {
+    .coleccion-despliegue {
+      padding-left: 0px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      .coleccion-info-left {
+        box-sizing: border-box;
+        padding-top: 88px;
+        width: 100%;
+
+        .endk-top-navbar {
+          grid-template-columns: 1fr;
+          .button {
+            display: none;
+          }
+        }
+
+        .place-title {
+          h2 {
+            font-size: 40px;
+          }
+        }
+        .place-media {
+          height: 35%;
+        }
+        .place-desc {
+          p.desc {
+            max-width: 100%;
+          }
+          margin-bottom: 20px;
+        }
+
+        .endk-content-carousel-coleccion {
+          position: relative;
+          .endk-carousel-coleccion {
+            .chevron-left {
+              justify-content: flex-start;
+            }
+            .carousel {
+              overflow: hidden;
+              width: 80%;
+            }
+            .chevron-right {
+              justify-content: flex-end;
+            }
+          }
+        }
+      }
+
+      .coleccion-side-media {
+        position: relative;
+        width: 100%;
+      }
+    }
+  }
+}
 </style>
 <template>
   <div class="coleccion-interior interior">
@@ -155,7 +269,7 @@
                 </li>
               </nav>
             </XyzTransition>
-            <XyzTransition xyz="fade up-100%">
+            <XyzTransition class="fade up-100%">
               <button
                 v-if="endkTopNavbar"
                 class="button"
@@ -172,13 +286,19 @@
             </XyzTransition>
           </div>
           <div class="place-media">
-            <XyzTransition xyz="fade left-4">
-              <img
-                v-show="showMedia"
-                src="~/assets/img/coleccion/bt1.png"
-                alt=""
-              />
+            <!-- main image -->
+            <XyzTransition class="ovxyz-media-a">
+              <img v-show="showMediaA" :src="endkMediaA" alt="" />
             </XyzTransition>
+            <!-- main image -->
+
+            <!-- next image -->
+            <div class="aux-floating-image">
+              <XyzTransition class="ovxyz-media-b">
+                <img v-show="showMediaB" :src="endkMediaB" alt="" />
+              </XyzTransition>
+            </div>
+            <!-- next image -->
           </div>
           <div class="place-subtitle">
             <XyzTransition xyz="fade left-4">
@@ -220,7 +340,7 @@
                     <img src="~/assets/img/coleccion/t4.png" alt="" />
                   </li>
                 </ul>
-                <div class="chevron-right">
+                <div class="chevron-right" v-on:click="moveRight">
                   <v-icon name="chevron_right" scale="2" />
                 </div>
               </div>
@@ -232,16 +352,58 @@
         </XyzTransition>
       </div>
     </XyzTransition>
+    <img src="~/assets/img/coleccion/bt1.png" alt="" width="0" />
+    <img src="~/assets/img/coleccion/bt2.png" alt="" width="0" />
+    <img src="~/assets/img/coleccion/bt3.png" alt="" width="0" />
+    <img src="~/assets/img/coleccion/bt4.png" alt="" width="0" />
+    <img src="~/assets/img/coleccion/bt5.png" alt="" width="0" />
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      index: 1,
+      base: "/_nuxt/assets/",
+      endkColection: [
+        {
+          name: "Armchair Nº01",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+          image: "img/coleccion/bt1.png",
+        },
+        {
+          name: "Armchair Nº02",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+          image: "img/coleccion/bt2.png",
+        },
+        {
+          name: "Armchair Nº03",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+          image: "img/coleccion/bt3.png",
+        },
+        {
+          name: "Armchair Nº04",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+          image: "img/coleccion/bt4.png",
+        },
+        {
+          name: "Armchair Nº05",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+          image: "img/coleccion/bt5.png",
+        },
+      ],
+      endkMediaA: "",
+      endkMediaB: "",
       endkTopNavbar: false,
       endkContentCarouselColeccion: false,
       showTitle: false,
-      showMedia: false,
+      showMediaA: false,
+      showMediaB: false,
       showSubTitle: false,
       showDesc: false,
       despliegueTotal: false,
@@ -256,17 +418,29 @@ export default {
     section: "coleccion-interior",
     parent: "coleccion",
   },
+  created() {
+    this.endkMediaA = this.base + this.endkColection[0].image;
+    this.endkMediaB = this.base + this.endkColection[1].image;
+  },
   mounted() {
     console.log("loaded coleccion detalle");
+    this.$store.commit("app/setDetalleColeccionOpen", true);
     this.showLayout();
   },
   methods: {
+    moveRight() {
+      this.index++;
+      this.showMediaA = !this.showMediaA;
+      this.showMediaB = !this.showMediaB;
+    },
+    inA() {},
+    inB() {},
     volver_coleccion() {
       this.despliegueMedia = false;
       this.endkTopNavbar = false;
       this.endkContentCarouselColeccion = false;
 
-      this.showMedia = false;
+      this.showMediaA = false;
       this.showSubTitle = false;
       this.showDesc = false;
 
@@ -292,7 +466,7 @@ export default {
       }, 100);
 
       setTimeout(() => {
-        this.showMedia = true;
+        this.showMediaA = true;
       }, 200);
 
       setTimeout(() => {

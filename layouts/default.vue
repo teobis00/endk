@@ -18,13 +18,17 @@ body {
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 
+  &.no-scroll {
+    overflow: hidden;
+  }
+
   @media screen and (max-width: 1024px) {
     overflow-y: auto;
     overflow-x: hidden;
   }
 }
 .endk-scroll-container {
-  width: 580vw;
+  width: 980vw;
   height: 100vh;
   display: flex;
 
@@ -37,6 +41,12 @@ body {
   .place-section-inicio {
     width: 100vw;
     height: 100vh;
+
+    @media screen and (max-width: 1024px) {
+      width: 100vw;
+      height: auto;
+      display: inline-block;
+    }
   }
   .place-section-coleccion {
     width: 100vw;
@@ -55,13 +65,27 @@ body {
         rgba(255, 255, 255, 0) 100%
       );
     }
+
+    @media screen and (max-width: 1024px) {
+      width: 100vw;
+      height: auto;
+      display: inline-block;
+    }
   }
   .place-section-3 {
     width: 80vw;
     height: 100vh;
+    @media screen and (max-width: 1024px) {
+      width: 100vw;
+    }
   }
   .place-section-proyectos {
-    width: 200vw;
+    width: 300vw;
+    height: 100vh;
+  }
+
+  .place-section-mitigacion {
+    width: 300vw;
     height: 100vh;
   }
 }
@@ -89,15 +113,33 @@ body {
   z-index: 150;
   transition: top 800ms ease-out, left 800ms ease-out;
 }
+
+.info-aux {
+  width: 60px;
+  height: auto;
+  position: fixed;
+  z-index: 10000000;
+  left: 0px;
+  top: 0px;
+  background-color: rgb(255, 205, 210);
+  min-height: 40px;
+}
 </style>
 
 <template>
   <div
     class="endk-window-with"
+    :class="{ 'no-scroll': disableScroll }"
     ref="scrollContent"
     v-on:wheel="wscroll"
     v-on:scroll="bscroll"
   >
+    <!--
+    <div class="info-aux">
+      ppro: {{ p1 }} <br />
+      ps3 : {{ p2 }}
+    </div>
+  -->
     <XyzTransition xyz="fade">
       <div
         class="overlay_blur"
@@ -185,10 +227,6 @@ body {
       :scrollX="scrollX"
     ></endk-menu>
 
-    <!--
-    <LocomotiveScroll ref="scroller" :getted-options="ops">
-    -->
-
     <div class="endk-scroll-container">
       <!--------- Section Inicio ---------->
       <div ref="index" class="place-section-inicio" data-scroll-section>
@@ -206,18 +244,14 @@ body {
       </div>
 
       <!--------- Section Proyectos ---------->
-      <div class="place-section-proyectos" data-scroll-section>
+      <div ref="proyectos" class="place-section-proyectos" data-scroll-section>
         <endk-section-proyectos />
       </div>
       <!--------- Section Inicio ---------->
-      <div class="place-section-inicio" data-scroll-section>
-        <endk-section-inicio />
+      <div class="place-section-place-section-mitigacion" data-scroll-section>
+        <endk-section-mitigacion />
       </div>
     </div>
-
-    <!--
-    </LocomotiveScroll>
-    -->
 
     <Nuxt />
   </div>
@@ -229,6 +263,7 @@ import endkSectionColeccion from "~/components/sections/endk-section-coleccion";
 import endkSection3 from "~/components/sections/endk-section-3";
 import endkMenu from "~/components/endkMenu";
 import endkSectionProyectos from "~/components/sections/endk-section-proyectos";
+import endkSectionMitigacion from "~/components/sections/endk-section-mitigacion";
 
 export default {
   middleware: "handle",
@@ -238,6 +273,7 @@ export default {
     endkSectionColeccion,
     endkSectionProyectos,
     endkSection3,
+    endkSectionMitigacion,
   },
   data() {
     return {
@@ -320,6 +356,15 @@ export default {
     /* ------------------------------------- */
   },
   computed: {
+    p1() {
+      return this.$store.getters["app/getPProyectos"].p;
+    },
+    p2() {
+      return this.$store.getters["app/getPSection3"].p;
+    },
+    disableScroll() {
+      return this.$store.getters["app/getDetalleColeccionOpen"];
+    },
     scrollX() {
       return this.$store.getters["app/getX"];
     },
@@ -332,6 +377,10 @@ export default {
       });
     },
     wscroll(e) {
+      if (this.disableScroll) {
+        return false;
+      }
+
       this.$refs.scrollContent.scrollLeft += e.deltaY;
 
       this.$store.commit("app/setScroll", {

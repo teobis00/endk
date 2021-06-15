@@ -71,6 +71,13 @@ export default {
           default: resolve(__dirname, "pages/coleccion-interior.vue"), // or routes[index].component
         },
       });
+
+      routes.push({
+        path: "/proyectos/detalle",
+        components: {
+          default: resolve(__dirname, "pages/proyectos-interior.vue"), // or routes[index].component
+        },
+      });
     },
   },
   gsap: {

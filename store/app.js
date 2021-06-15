@@ -90,7 +90,7 @@ export const getters = {
   getPProyectos(state, getters) {
     /* const Inicio */
     const bloque = 2.8;
-    const factor = 2;
+    const factor = 3;
     /* ************ */
 
     const width = state.windowWidth;
