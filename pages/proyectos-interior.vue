@@ -436,7 +436,7 @@
                 </li>
                 <li><NuxtLink to="/">Proyectos /</NuxtLink></li>
                 <li>
-                  <NuxtLink to="/" class="active">Mobiliario en obra</NuxtLink>
+                  <NuxtLink to="/" class="active">{{ titulo }}</NuxtLink>
                 </li>
               </nav>
 
@@ -449,7 +449,7 @@
         <div class="place-title">
           <XyzTransition xyz="fade down-100%" class="ovxyz-custom-time1">
             <h2 :class="{ 'ly-detalle': lyDetalle }" v-show="endkTitle">
-              Mobiliario en obra
+              {{ titulo }}
             </h2>
           </XyzTransition>
         </div>
@@ -488,30 +488,23 @@
                     class="floatMedia"
                     v-show="endkMainMedia"
                     :style="transitionStyle"
-                    src="~/assets/img/main_image_big.jpg"
+                    :src="media.current_main"
                     alt=""
                   />
                 </XyzTransition>
                 <img
                   class="floatMedia-clip"
                   :style="clipPath"
-                  src="~/assets/img/main_image_big.jpg"
+                  :src="media.current_main"
                   alt=""
                 />
               </div>
               <div class="info">
-                <span :class="{ reveal: endkSubTitle }"
-                  >Diseñamos muebles para espacios únicos cumpliendo
-                  rigurosamente los requerimientos técnicos y estéticos de
-                  nuestros clientes.</span
-                >
+                <span :class="{ reveal: endkSubTitle }">{{
+                  titulo_interior_proyecto
+                }}</span>
                 <p class="desc" :class="{ reveal: endkParrafo }">
-                  Desde el origen de un proyecto, detectamos las necesidades que
-                  demandan nuestros clientes. Ofrecemos las soluciones más
-                  idóneas que signifiquen lograr el máximo confort y
-                  aprovechamiento de los espacios. Tomamos en consideración
-                  todos los detalles estéticos, funcionales y técnicos para
-                  llegar al resultado requerido.
+                  {{ descripcion_interior_proyecto }}
                 </p>
               </div>
 
@@ -623,13 +616,21 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   meta: {
     section: "proyectos-interior",
     parent: "proyectos",
   },
   async asyncData({ route }) {
-    console.log("route.params", route);
+    const { section } = route.params;
+    if (section === "proyectos-interior") {
+      return {};
+    }
+    const { data } = await axios.get(`https://static.endemik.cl/${section}`);
+    // console.log(data);
+    return data;
   },
   data() {
     return {
@@ -655,6 +656,9 @@ export default {
       interiorRevealParrafo: false,
       imageTarget: null,
       invertNav: false,
+      media: {
+        current_main: "",
+      },
     };
   },
   computed: {
@@ -725,7 +729,11 @@ export default {
 
     this.imageTarget = this.$refs.placeMedia;
 
-    // console.log("this.imageTarget", this.imageTarget);
+    if (this.casos) {
+      this.media.current_main = this.casos[0].main_caso;
+    } else {
+      this.$router.push("/404");
+    }
   },
   methods: {
     setMotionDetalle() {

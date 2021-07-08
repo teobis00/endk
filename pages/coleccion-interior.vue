@@ -365,7 +365,7 @@ export default {
   data() {
     return {
       index: 1,
-      base: "/_nuxt/assets/",
+      base: "~/assets/",
       endkColection: [
         {
           name: "Armchair Nº01",

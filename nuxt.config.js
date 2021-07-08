@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -84,5 +86,14 @@ export default {
   },
   gsap: {
     extraPlugins: { scrollTo: true },
+  },
+  target: "static",
+  generate: {
+    exclude: ["/proyectos-interior"],
+    routes() {
+      return axios.get("https://static.endemik.cl/proyectos/").then((res) => {
+        return res.data.lista_proyectos.map((p) => "/proyectos" + p.path);
+      });
+    },
   },
 };
