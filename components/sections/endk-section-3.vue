@@ -1,11 +1,6 @@
 <style lang="less" scoped>
 .endk-section-3 {
   width: 100%;
-  background-color: white;
-  background-image: url("~/assets/img/bg_section3.jpg");
-  background-position: center left;
-  background-repeat: no-repeat;
-  background-size: contain;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -155,7 +150,7 @@ export default {
   mounted() {
     this.bar = new ProgressBar.Path("#line-path", {
       easing: "linear",
-      duration: 0,
+      duration: 200,
     });
   },
   components: {
@@ -180,11 +175,11 @@ export default {
     PColleccion(n) {
       this.visibleSpot1 = n > 55 ? "visible" : "hidden";
       if (n - 35 <= 0) {
-        this.bar.set(0);
+        this.bar.animate(0);
       }
       const avanceMediaPantalla = (n - 10) / 100;
       if (avanceMediaPantalla > 0) {
-        this.bar.set(avanceMediaPantalla);
+        this.bar.animate(avanceMediaPantalla);
       }
     },
   },

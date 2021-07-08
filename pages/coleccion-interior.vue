@@ -273,6 +273,7 @@
               <button
                 v-if="endkTopNavbar"
                 class="button"
+                dc="Volver"
                 v-on:click="volver_coleccion"
               >
                 Volver

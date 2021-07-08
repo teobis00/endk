@@ -1,20 +1,458 @@
 <style lang="less" scoped>
 .endk-section-mitigacion {
   width: 100%;
+  /*
   background-color: white;
+  background-image: url("~/assets/img/bg_trans_mit.png");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: -39%;
+  */
+  position: relative;
+  display: flex;
+  align-items: center;
+  .aux-p-mit {
+    display: none;
+    position: fixed;
+    left: 70px;
+    top: 0px;
+    background-color: #f8bbd0;
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+
+  .mask-final-mit {
+    width: 12vw;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    background: linear-gradient(
+      270deg,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  .pos-bg-section-mitigacion-fixed {
+    background-image: url("~/assets/img/bg_trans_mit.png");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: -10%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pos-bg-section-mitigacion {
+    background-image: url("~/assets/img/bg_trans_mit2.png");
+    /*background-attachment: fixed;*/
+    background-size: cover;
+    background-position: -10%;
+    position: absolute;
+    left: 0px;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+  }
+  .pos-section-mitigacion {
+    z-index: 30;
+    display: grid;
+    grid-template-areas:
+      "x p"
+      "l i";
+    height: 90vh;
+    .sep-inicio {
+      grid-area: l;
+      width: 40vw;
+      height: 40vw;
+    }
+
+    .path {
+      grid-area: p;
+      display: grid;
+      position: relative;
+      height: auto;
+    }
+    .info-relative-mit {
+      grid-area: i;
+      position: relative;
+
+      .subtitle {
+        text-align: right;
+        height: auto;
+        position: absolute;
+        left: -1vw;
+        top: 0;
+        transform: translateX(-100%) translateY(-10.5vw);
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+
+      .infor-start-mit {
+        position: absolute;
+        left: 17vw;
+        top: 0;
+        transform: translateX(-100%) translateY(-7vw);
+        width: 42vw;
+        display: inline-block;
+        height: auto;
+        h3 {
+          text-align: right;
+        }
+        .button {
+          float: right;
+          margin-top: 27px;
+          min-width: 180px;
+        }
+      }
+
+      .ton {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: translateX(35.8vw) translateY(-9vw);
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          li {
+            font-size: 16px;
+            font-weight: 700;
+            color: #7f7b6b;
+          }
+        }
+      }
+
+      .metros {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: translateX(81vw) translateY(-2vw);
+        p {
+          strong {
+            color: #7f7b6b;
+          }
+        }
+      }
+
+      .ha {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: translateX(120.5vw) translateY(-8.5vw);
+        p {
+          strong {
+            color: #7f7b6b;
+          }
+        }
+      }
+      .per {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: translateX(162.8vw) translateY(0.5vw);
+        p {
+          strong {
+            color: #7f7b6b;
+          }
+        }
+      }
+
+      .final {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: translateX(196.8vw) translateY(-9vw);
+        p {
+          strong {
+            color: #7f7b6b;
+          }
+        }
+      }
+    }
+    /*
+    .blank {
+      grid-area: n;
+      display: grid;
+    }
+    .space {
+      grid-area: s;
+    }
+    .space2 {
+      grid-area: t;
+    }
+    .ton {
+      grid-area: a;
+      margin-top: -10vw;
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li {
+          font-size: 16px;
+          font-weight: 700;
+          color: #7f7b6b;
+        }
+      }
+    }
+    .metros {
+      grid-area: b;
+      margin-top: -4vw;
+      p {
+        strong {
+          color: #7f7b6b;
+        }
+      }
+    }
+    .ha {
+      grid-area: c;
+      margin-top: -11vw;
+      p {
+        strong {
+          color: #7f7b6b;
+        }
+      }
+    }
+    .per {
+      grid-area: d;
+      margin-top: -1vw;
+      p {
+        strong {
+          color: #7f7b6b;
+        }
+      }
+    }
+    .final {
+      grid-area: e;
+      margin-top: -11vw;
+      p {
+        strong {
+          color: #7f7b6b;
+        }
+      }
+    }
+    */
+  }
 }
 </style>
 
 <template>
-  <section class="endk-section endk-section-mitigacion"></section>
+  <section class="endk-section endk-section-mitigacion">
+    <div class="aux-p-mit">{{ percent }}</div>
+    <div class="pos-bg-section-mitigacion"></div>
+    <div class="pos-bg-section-mitigacion-fixed" :style="bgStyle"></div>
+    <div class="pos-section-mitigacion">
+      <div class="sep-inicio"></div>
+      <div class="path">
+        <!-- Path -->
+        <endk-large-path :percent="percent" />
+      </div>
+      <div class="info-relative-mit">
+        <div class="subtitle">
+          <h3>Nuestras medidas de</h3>
+        </div>
+        <div class="infor-start-mit">
+          <h1>Mitigación</h1>
+          <br />
+          <h4>
+            Compromiso con el medio ambiente
+          </h4>
+          <p>
+            Además de las regulaciones medioambientales que existen actualmente
+            en el país, como empresa tomamos roles propios que nos permiten
+            estar en un estado ambiental superior mundialmente.
+          </p>
+
+          <button class="button" dc="Descargar Informe">
+            Descargar Informe
+          </button>
+        </div>
+
+        <div class="ton">
+          <h4>
+            Gases de efecto invernadero <br />
+            neutralizados al año
+          </h4>
+          <p>
+            Llevamos a cero la huella de carbono<br />
+            en cada fase de nuestro proceso<br />
+            productivo.
+          </p>
+          <br />
+          <ul>
+            <li>1. Extracción</li>
+            <li>2. Fabricación</li>
+            <li>3. Consumo</li>
+            <li>4. Entrega</li>
+          </ul>
+          <br />
+          <p>
+            El concepto “huella de carbono” aborda la suma del<br />
+            impacto de todas las emisiones de gases de efecto<br />
+            invernadero atribuidas alos materiales a lo largo de<br />
+            su ciclo devida (extracción,fabricación ,construcción,<br />
+            utilización/mantención y finalización de vida útil).
+          </p>
+          <p>
+            La neutralización del carbono es una alternativa que<br />
+            busca evitar las consecuencias del desequilibrio del efecto<br />
+            invernadero, a partir del cálculo de sus emisiones.
+          </p>
+        </div>
+
+        <div class="metros">
+          <h4>
+            Preservación de árboles<br />
+            nativos con la fundación PIC.
+          </h4>
+          <p>
+            Resguardamos el escositema a nivel nacional en<br />
+            conjunto con la fundación Preserve in Community.
+          </p>
+          <p><strong>Cómo funciona?</strong></p>
+          <p>
+            Diferentes fundaciones de todo el mundo<br />
+            pueden usar a PIC para financiar sus<br />
+            proyectos.
+          </p>
+          <p>
+            Cada proyecto tiene un número de PICS<br />
+            preservables. Cada PIC representa 1m2<br />
+            de terreno y cuesta $1USD al año.
+          </p>
+        </div>
+
+        <div class="ha">
+          <h4>
+            Banco de compensación de <br />
+            especies protegidas.
+          </h4>
+          <p>
+            Preservamos la biodiversidad de nuestro<br />
+            ecosistema en la región de Ñuble.
+          </p>
+          <p>
+            <strong
+              >Qué especies se están <br />
+              preservando?</strong
+            >
+          </p>
+          <p>
+            Diversas especies que están en peligro de <br />
+            extinción y otras en estado crítico de <br />
+            conservación son resguardadas por <br />
+            profesionales y técnicos especialistas de <br />
+            Conaf. Dentro de estas se encuentran el <br />
+            naranjillo, raulí, lingue, arrayán, coihue, <br />
+            avellano, entre otros.
+          </p>
+        </div>
+
+        <div class="per">
+          <h4>
+            De desechos reciclados<br />
+            o reutilizados.
+          </h4>
+          <p>
+            Aprovechamos los residuos dándoles<br />
+            una segunda vida útil.
+          </p>
+          <p><strong>Qué se ha hecho con los residuos?</strong></p>
+          <p>
+            Diversas especies que están en peligro de <br />
+            extinción y otras en estado crítico de <br />
+            conservación son resguardadas por <br />
+            profesionales y técnicos especialistas de <br />
+            Conaf. Dentro de estas se encuentran el <br />
+            naranjillo, raulí, lingue, arrayán, coihue, <br />
+            avellano, entre otros.
+          </p>
+        </div>
+        <div class="final">
+          <h4>
+            De árboles plantados en<br />
+            Chiloé y Buchupureo.
+          </h4>
+          <p>
+            Junto a la fundación Núcleo Nativo<br />
+            hemos plantado 450 árboles.
+          </p>
+          <p><strong>Fundación Núcleo Nativo</strong></p>
+          <p>
+            Desarrollo de proyectos y acciones que <br />
+            buscan fortalecer el vínculo entre la <br />
+            sociedad y los ecosistemas en los que <br />
+            habitan.
+          </p>
+          <p>
+            El proyecto recoge su experiencia y <br />
+            conocimiento para realizar acciones que <br />
+            den valor a su patrimonio natural, <br />
+            histórico, cultural y restaurar ecosistemas <br />
+            degradados por diversas causas, <br />
+            derivadas principalmente de la escasez de <br />
+            agua y recursos naturales para una vida <br />
+            sostenible.
+          </p>
+        </div>
+      </div>
+      <div class="mask-final-mit"></div>
+    </div>
+  </section>
 </template>
 
 <script>
+import endkLargePath from "~/components/endkLargePath";
+
 export default {
-  mounted() {},
   name: "endk-section-mitigacion",
   data() {
-    return {};
+    return {
+      largePath: null,
+      lpw: 0,
+      lph: 0,
+    };
   },
+  components: {
+    endkLargePath,
+  },
+  mounted() {
+    /*
+    this.bar = new ProgressBar.Path("#line-path-m", {
+      easing: "linear",
+      duration: 400,
+    });*/
+    // this.largePath = this.$refs.largePath;
+    //    this.lpw = this.largePath.getBoundingClientRect().width;
+    //    this.lph = this.largePath.getBoundingClientRect().height;
+  },
+  computed: {
+    bgStyle() {
+      return { opacity: this.percent / 10 };
+    },
+    percent() {
+      let percent = this.$store.getters["app/getPProyectos"].p - 80;
+      if (percent > 70) {
+        return Math.round(percent * 1.1);
+      }
+      return percent;
+    },
+    pos1() {
+      return { transform: ` translateX(200px)` };
+    },
+  },
+  watch: {
+    percent(n) {
+      // this.bar.set(n / 100);
+    },
+  },
+  methods: {},
 };
 </script>

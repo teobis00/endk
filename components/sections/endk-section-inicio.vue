@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("~/assets/img/bg_main_inicio.png");
+  background-image: url("~/assets/img/bg_main_inicio.jpg");
   background-size: cover;
   background-position: center right;
   background-repeat: no-repeat;
@@ -211,7 +211,9 @@
         </div>
         <div class="aux-button">
           <XyzTransition class="ovxyz-inicio-button">
-            <button class="button" v-if="tstartAnim3">Conócenos</button>
+            <button class="button" dc="Conócenos" v-if="tstartAnim3">
+              Conócenos
+            </button>
           </XyzTransition>
         </div>
         <XyzTransition class="ovxyz-inicio-button">
@@ -325,6 +327,38 @@ export default {
       setTimeout(() => {
         this.tstartAnim4 = true;
       }, 1800);
+    },
+  },
+  methods: {
+    handleMouseEnter(e) {
+      const config = {
+        stop: true,
+        size: 40,
+        plusSize: 1,
+        showOutter: true,
+      };
+      this.$store.commit("cursor/setCursor", { e, config });
+    },
+    handleMouseEnter2(e) {
+      const config = {
+        stop: false,
+        size: 80,
+        plusSize: 2,
+        showOutter: false,
+      };
+      this.$store.commit("cursor/setCursor", { e, config });
+    },
+    handleMouseEnter3(e) {
+      const config = {
+        stop: false,
+        size: 38,
+        plusSize: 1,
+        showOutter: false,
+      };
+      this.$store.commit("cursor/setCursor", { e, config });
+    },
+    handleMouseLeave(e) {
+      this.$store.commit("cursor/setCursor", false);
     },
   },
 };

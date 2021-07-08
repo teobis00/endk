@@ -15,11 +15,6 @@ export default {
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap",
-      },
-      {
-        rel: "stylesheet",
-        href:
           "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap",
       },
     ],
@@ -73,7 +68,14 @@ export default {
       });
 
       routes.push({
-        path: "/proyectos/detalle",
+        path: "/proyectos/:section",
+        components: {
+          default: resolve(__dirname, "pages/proyectos-interior.vue"), // or routes[index].component
+        },
+      });
+
+      routes.push({
+        path: "/proyectos/:section/:detalle",
         components: {
           default: resolve(__dirname, "pages/proyectos-interior.vue"), // or routes[index].component
         },

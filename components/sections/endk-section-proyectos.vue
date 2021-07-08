@@ -81,13 +81,61 @@
         display: inline-block;
         height: 100%;
       }
+      .place-curve-text {
+        width: 160px;
+        position: absolute;
+        left: 7.2%;
+        top: 38%;
+        height: auto;
+        transform: translateX(-48%) translateY(-76px);
+        z-index: 90;
+      }
       .marker {
+        z-index: 100;
         width: 50px;
         height: 50px;
         border-radius: 50%;
         border: 1px solid black;
         position: absolute;
-        left: 17.2%;
+        left: 7.2%;
+        top: 38%;
+        transform: translateY(-25px) translateX(-25px;);
+        transition: all 380ms cubic-bezier(0.33, 1, 0.68, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+          width: 12px;
+          height: 12px;
+          background-color: black;
+          display: inline-block;
+          border-radius: 50%;
+          animation: pulse-black 2s infinite;
+          padding: 0px;
+          margin: 0px;
+          pointer-events: none;
+          transform: scale(1);
+          transition: all 380ms cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        &:hover {
+          transform: translateY(-25px) translateX(-25px;) scale(1.3);
+          background-color: rgba(33, 33, 33, 0.1);
+          span {
+            background-color: #424242;
+            transform: scale(2);
+            animation: none;
+          }
+        }
+      }
+
+      .marker2 {
+        z-index: 100;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid black;
+        position: absolute;
+        left: 57.5%;
         top: 32%;
         transform: translateY(-25px) translateX(-25px;);
         transition: all 380ms cubic-bezier(0.33, 1, 0.68, 1);
@@ -115,6 +163,42 @@
             transform: scale(2);
             animation: none;
           }
+        }
+      }
+
+      .full-column-name {
+        width: 70px;
+        box-shadow: 0px 1px 3px 2px rgba(33, 33, 33, 0.4);
+        transform: translateX(-50%);
+        height: 102vh;
+        position: absolute;
+        left: 57.5%;
+        top: -1vh;
+        background-color: #807d74;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        transition: all 380ms cubic-bezier(0.33, 1, 0.68, 1);
+        opacity: 0;
+        &.reveal {
+          opacity: 1;
+          .ptitle {
+            clip-path: inset(0% 0% 0% 0%);
+          }
+        }
+        .ptitle {
+          transition: clip-path 400ms cubic-bezier(0.33, 1, 0.68, 1);
+          clip-path: inset(0% 100% 0% 0%);
+          white-space: nowrap;
+          width: auto;
+          display: inline-block;
+          height: auto;
+          font-size: 42px;
+          color: white;
+          transform: rotate(-90deg) translateX(50%);
+          transform-origin: 50% 50%;
+          text-align: center;
+          top: 0px;
         }
       }
     }
@@ -181,6 +265,7 @@
 
 <template>
   <section class="endk-section endk-section-proyectos">
+    <!--
     <div
       ref="cinner"
       class="circle-cursor circle-cursor--inner"
@@ -199,6 +284,7 @@
     <div ref="ctext" class="circle-cursor circle-cursor--text">
       Mobiliario en obra
     </div>
+  -->
     <div class="line2">
       <svg
         viewBox="-1 0 100 40"
@@ -243,7 +329,11 @@
           componentes y todo el ciclo de vida, desde el diseño de este.
         </p>
 
-        <button class="button" :style="buttonSectionStyle">
+        <button
+          class="button"
+          dc="Descargar proyectos"
+          :style="buttonSectionStyle"
+        >
           Descargar proyectos
         </button>
       </div>
@@ -252,11 +342,14 @@
     <div class="galeria-proyectos" :style="imageContentStyle">
       <div class="media-realative-proyectos">
         <img
-          src="~/assets/img/proyectos.png"
+          src="~/assets/img/proyectos.jpg"
           alt=""
           v-on:mouseover="showCursor = true"
           v-on:mouseleave="showCursor = false"
         />
+        <div class="place-curve-text">
+          <endk-curve-text text="Mobiliario en Obra" :showtext="stext" />
+        </div>
         <div
           class="marker"
           v-on:mouseover="handleMouseEnter"
@@ -264,6 +357,22 @@
           v-on:click="goInterior"
         >
           <span></span>
+        </div>
+
+        <div
+          class="marker2"
+          :style="barTitleStyle"
+          v-on:mouseover="handleMouseEnter2($event, { esto: 1 })"
+          v-on:mouseleave="handleMouseLeave2"
+          v-on:click="goInterior"
+        >
+          <span></span>
+        </div>
+
+        <div class="full-column-name" :class="{ reveal: showBar }">
+          <div class="ptitle">
+            Mobiliario
+          </div>
         </div>
       </div>
     </div>
@@ -276,12 +385,13 @@
 </template>
 
 <script>
-import endkDataScroll from "~/components/endkDataScroll";
 import ProgressBar from "progressbar.js";
 import { TweenMax } from "gsap";
 
+import endkCurveText from "~/components/endkCurveText";
+
 export default {
-  name: "endk-section-inicio",
+  name: "endk-section-proyectos",
   data() {
     return {
       customAvance: 0,
@@ -292,10 +402,12 @@ export default {
       outerCursorOriginals: {},
       scursor: true,
       showCursor: false,
+      stext: false,
+      showBar: false,
     };
   },
   components: {
-    endkDataScroll,
+    endkCurveText,
   },
   mounted() {
     const cText = this.$refs.ctext;
@@ -312,13 +424,16 @@ export default {
 
     this.bar = new ProgressBar.Path("#line-path2", {
       easing: "linear",
-      duration: 0,
+      duration: 200,
     });
 
-    this.prepareCursor();
+    // this.prepareCursor();
   },
 
   computed: {
+    barTitleStyle() {
+      return {};
+    },
     imageContentStyle() {
       const p = this.$store.getters["app/getPSection3"].p - 50;
       const x = p > 0 ? 50 - p : 50;
@@ -386,130 +501,37 @@ export default {
   },
   methods: {
     goInterior() {
-      this.$router.push("/proyectos/detalle");
+      this.$router.push("/proyectos/mobiliario-en-obra");
     },
     handleMouseEnter(e) {
-      const outerCursor = this.$refs.couter;
-      const outerCursorBox = outerCursor.getBoundingClientRect();
-
-      this.isStuck = true;
-      const target = e.currentTarget;
-      const box = target.getBoundingClientRect();
-      this.outerCursorOriginals = {
-        width: outerCursorBox.width,
-        height: outerCursorBox.height,
+      this.stext = true;
+      const config = {
+        stop: true,
+        size: 52,
+        plusSize: 1,
+        showOutter: true,
       };
-      TweenMax.to(outerCursor, 0.2, {
-        x: box.left + 2,
-        y: box.top + 2,
-        width: "45px",
-        height: "45px",
-        opacity: 1,
-        borderColor: "#212121",
-      });
-
-      const innerCursor = this.$refs.cinner;
-
-      TweenMax.to(innerCursor, 0.2, {
-        backgroundColor: "rgba(0, 0, 0, 0)",
-      });
-
-      const plus = this.$refs.plusvg;
-
-      TweenMax.to(plus, 0.2, {
-        scale: 1,
-      });
-
-      const cText = this.$refs.ctext;
-
-      TweenMax.to(cText, 0.2, {
-        scale: 1,
-      });
+      this.$store.commit("cursor/setCursor", { e, config });
     },
     handleMouseLeave(e) {
-      const outerCursor = this.$refs.couter;
-      this.isStuck = false;
-      TweenMax.to(outerCursor, 0.2, {
-        width: 40,
-        height: 40,
-        opacity: 0.4,
-        borderColor: "#263238",
-      });
-
-      const innerCursor = this.$refs.cinner;
-
-      TweenMax.to(innerCursor, 0.2, {
-        backgroundColor: "rgba(0, 0, 0, 1)",
-      });
-
-      const plus = this.$refs.plusvg;
-
-      TweenMax.to(plus, 0.2, {
-        scale: 0,
-      });
-
-      const cText = this.$refs.ctext;
-
-      TweenMax.to(cText, 0.2, {
-        scale: 0,
-      });
+      this.stext = false;
+      this.$store.commit("cursor/setCursor", false);
     },
-    prepareCursor() {
-      const outerCursor = this.$refs.couter;
-      const innerCursor = this.$refs.cinner;
-      const cText = this.$refs.ctext;
-      const outerCursorBox = outerCursor.getBoundingClientRect();
-      let outerCursorSpeed = 0;
+    handleMouseEnter2(e, opt) {
+      console.log("opt", opt);
 
-      const unveilCursor = () => {
-        TweenMax.set(innerCursor, {
-          x: this.clientX,
-          y: this.clientY,
-        });
-
-        TweenMax.set(cText, {
-          x: this.clientX,
-          y: this.clientY,
-        });
-
-        TweenMax.set(outerCursor, {
-          x: this.clientX - outerCursorBox.width / 2,
-          y: this.clientY - outerCursorBox.height / 2,
-        });
-        setTimeout(() => {
-          outerCursorSpeed = 0.2;
-        }, 100);
+      this.showBar = true;
+      const config = {
+        stop: true,
+        size: 52,
+        plusSize: 1,
+        showOutter: true,
       };
-
-      document.addEventListener("mousemove", unveilCursor);
-      document.addEventListener("mousemove", (e) => {
-        this.clientX = e.clientX;
-        this.clientY = e.clientY;
-      });
-
-      const render = () => {
-        TweenMax.set(innerCursor, {
-          x: this.clientX,
-          y: this.clientY,
-        });
-
-        TweenMax.set(cText, {
-          x: this.clientX,
-          y: this.clientY,
-        });
-
-        if (!this.isStuck) {
-          TweenMax.to(outerCursor, outerCursorSpeed, {
-            x: this.clientX - outerCursorBox.width / 2,
-            y: this.clientY - outerCursorBox.height / 2,
-          });
-        }
-        if (this.showCursor) {
-          document.removeEventListener("mousemove", unveilCursor);
-        }
-        requestAnimationFrame(render);
-      };
-      requestAnimationFrame(render);
+      this.$store.commit("cursor/setCursor", { e, config });
+    },
+    handleMouseLeave2(e) {
+      this.showBar = false;
+      this.$store.commit("cursor/setCursor", false);
     },
   },
 };

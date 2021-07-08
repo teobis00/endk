@@ -28,7 +28,7 @@ body {
   }
 }
 .endk-scroll-container {
-  width: 980vw;
+  width: 1030vw;
   height: 100vh;
   display: flex;
 
@@ -75,6 +75,10 @@ body {
   .place-section-3 {
     width: 80vw;
     height: 100vh;
+    background-image: url("~/assets/img/bg_section3.jpg");
+    background-position: center left;
+    background-repeat: no-repeat;
+    background-size: contain;
     @media screen and (max-width: 1024px) {
       width: 100vw;
     }
@@ -85,8 +89,20 @@ body {
   }
 
   .place-section-mitigacion {
-    width: 300vw;
+    width: 280vw;
     height: 100vh;
+  }
+
+  .place-section-nosotros {
+    width: 80vw;
+    height: 100vh;
+    background-color: white;
+  }
+
+  .place-section-contacto {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
   }
 }
 
@@ -221,6 +237,8 @@ body {
       </div>
     </XyzTransition>
 
+    <endk-cursor />
+
     <endk-menu
       :showMenu="nl"
       v-on:gotoScroll="gotoScroll"
@@ -247,9 +265,21 @@ body {
       <div ref="proyectos" class="place-section-proyectos" data-scroll-section>
         <endk-section-proyectos />
       </div>
-      <!--------- Section Inicio ---------->
-      <div class="place-section-place-section-mitigacion" data-scroll-section>
+      <!--------- Section Mitigacion ---------->
+      <div
+        ref="sustentabilidad"
+        class="place-section-mitigacion"
+        data-scroll-section
+      >
         <endk-section-mitigacion />
+      </div>
+
+      <div ref="nosotros" class="place-section-nosotros">
+        <endk-section-nosotros />
+      </div>
+
+      <div ref="contacto" class="place-section-contacto">
+        <endk-section-contacto />
       </div>
     </div>
 
@@ -258,12 +288,16 @@ body {
 </template>
 
 <script>
+import endkMenu from "~/components/endkMenu";
+import endkCursor from "~/components/endkCursor";
+
 import endkSectionInicio from "~/components/sections/endk-section-inicio";
 import endkSectionColeccion from "~/components/sections/endk-section-coleccion";
 import endkSection3 from "~/components/sections/endk-section-3";
-import endkMenu from "~/components/endkMenu";
 import endkSectionProyectos from "~/components/sections/endk-section-proyectos";
 import endkSectionMitigacion from "~/components/sections/endk-section-mitigacion";
+import endkSectionNosotros from "~/components/sections/endk-section-nosotros";
+import endkSectionContacto from "~/components/sections/endk-section-contacto";
 
 export default {
   middleware: "handle",
@@ -274,6 +308,9 @@ export default {
     endkSectionProyectos,
     endkSection3,
     endkSectionMitigacion,
+    endkSectionNosotros,
+    endkSectionContacto,
+    endkCursor,
   },
   data() {
     return {
@@ -316,6 +353,7 @@ export default {
       });
     }
     this.$store.commit("app/setWindowWidth", window.innerWidth);
+    this.$store.commit("app/setWindowHeight", window.innerHeight);
     this.$nextTick(function() {
       // this.$nuxt.$loading.start();
       // setTimeout(() => this.$nuxt.$loading.finish(), 500);
@@ -405,6 +443,7 @@ export default {
     },
     onResize() {
       this.$store.commit("app/setWindowWidth", window.innerWidth);
+      this.$store.commit("app/setWindowHeight", window.innerHeight);
     },
   },
   watch: {

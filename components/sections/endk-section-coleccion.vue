@@ -149,7 +149,12 @@
           generar una línea de diseño imperecedera, tanto desde su punto de
           vista estético como desde el ámbito de la construcción.
         </p>
-        <button class="button" :style="style_b" v-on:click="gotoInterior">
+        <button
+          class="button"
+          dc="Ver más"
+          :style="style_b"
+          v-on:click="gotoInterior"
+        >
           Ver más
         </button>
       </div>
@@ -160,7 +165,12 @@
             <img src="/silla.png" alt="" />
           </div>
         </XyzTransition>
-        <button class="button" :style="style_b" v-on:click="gotoInterior">
+        <button
+          class="button"
+          dc="Ver más"
+          :style="style_b"
+          v-on:click="gotoInterior"
+        >
           Ver más
         </button>
       </div>

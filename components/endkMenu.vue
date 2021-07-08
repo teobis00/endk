@@ -316,13 +316,19 @@
               >
             </li>
             <li>
-              <NuxtLink to="/proyectos">03. Proyectos</NuxtLink>
+              <NuxtLink to="/proyectos" v-on:click.native="isOpen = false"
+                >03. Proyectos</NuxtLink
+              >
             </li>
             <li>
-              <NuxtLink to="/sustentabilidad">04. Sustentabilidad</NuxtLink>
+              <NuxtLink to="/sustentabilidad" v-on:click.native="isOpen = false"
+                >04. Sustentabilidad</NuxtLink
+              >
             </li>
             <li>
-              <NuxtLink to="/nosotros">05. Nosotros</NuxtLink>
+              <NuxtLink to="/nosotros" v-on:click.native="isOpen = false"
+                >05. Nosotros</NuxtLink
+              >
             </li>
             <li>
               <NuxtLink to="/contacto">06. Contacto</NuxtLink>

@@ -12,6 +12,7 @@ export const state = () => ({
     y: 0,
   },
   windowWidth: 0,
+  windowHeight: 0,
   section: "",
 });
 
@@ -21,6 +22,9 @@ export const getters = {
   },
   getWindowWidth(state) {
     return state.windowWidth;
+  },
+  getWindowHeight(state) {
+    return state.windowHeight;
   },
   getLocomotiveOn(state) {
     return state.locomotiveOn;
@@ -104,6 +108,23 @@ export const getters = {
       x: Math.round(state.scroll.x),
     };
   },
+  getPMitigacion(state, getters) {
+    /* const Inicio */
+    const bloque = 5.8;
+    const factor = 2.8;
+    /* ************ */
+
+    const width = state.windowWidth;
+
+    let avance = state.scroll.x - width * bloque;
+    avance = Math.round(avance) > 0 ? Math.round(avance) : 0;
+    return {
+      p: Math.round((100 * avance) / (width * factor)),
+      b: bloque,
+      a: avance,
+      x: Math.round(state.scroll.x),
+    };
+  },
 };
 
 export const mutations = {
@@ -121,6 +142,9 @@ export const mutations = {
   },
   setWindowWidth(state, payload) {
     state.windowWidth = payload;
+  },
+  setWindowHeight(state, payload) {
+    state.windowHeight = payload;
   },
   setSection(state, payload) {
     state.section = payload;
