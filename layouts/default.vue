@@ -66,7 +66,7 @@ body {
       );
     }
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 580px) {
       width: 100vw;
       height: auto;
       display: inline-block;
@@ -79,30 +79,48 @@ body {
     background-position: center left;
     background-repeat: no-repeat;
     background-size: contain;
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 580px) {
       width: 100vw;
+      height: auto;
+      background-repeat: no-repeat;
     }
   }
   .place-section-proyectos {
     width: 300vw;
     height: 100vh;
+    @media screen and (max-width: 580px) {
+      width: 100vw;
+      height: auto;
+    }
   }
 
   .place-section-mitigacion {
     width: 280vw;
     height: 100vh;
+    @media screen and (max-width: 580px) {
+      width: 100vw;
+      height: auto;
+    }
   }
 
   .place-section-nosotros {
     width: 80vw;
     height: 100vh;
     background-color: white;
+    @media screen and (max-width: 580px) {
+      width: 100vw;
+      height: 80vh;
+    }
   }
 
   .place-section-contacto {
     width: 100vw;
     height: 100vh;
     background-color: white;
+    @media screen and (max-width: 580px) {
+      width: 100vw;
+      height: auto;
+    }
   }
 }
 

@@ -3,13 +3,24 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  svg {
-    display: inline-block;
-    width: 260vw;
-  }
+
   .control {
     position: sticky;
     left: 20px;
+  }
+  .number {
+    width: 100%;
+    border-top: 5px solid black;
+  }
+
+  svg {
+    width: 320px;
+    background-color: silver;
+    text {
+      font-size: 85px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+    }
   }
 }
 </style>
@@ -104,6 +115,27 @@
       <br />
       <input type="range" min="1" max="100" v-model="range" />
       <input type="range" min="1" max="100" v-model="factor" />
+    </div>
+    <div class="number">
+      <svg viewBox="0 0 550 130">
+        <defs>
+          <mask id="texture">
+            <image
+              height="800"
+              width="800"
+              xlink:href="~/assets/img/texture/t5.png"
+            />
+          </mask>
+        </defs>
+        <!--
+          <text text-anchor="end" x="552" y="85" mask="url(#texture)">
+            33 ton
+          </text>
+        -->
+        <text text-anchor="start" x="0" y="85" mask="url(#texture)">
+          33 ton
+        </text>
+      </svg>
     </div>
   </div>
 </template>

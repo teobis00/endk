@@ -43,6 +43,12 @@
 		}
 	}
 }
+
+@media screen and (max-width: 580px) {
+	.customCursor {
+		display: none;
+	}
+}
 </style>
 <template>
 	<div class="customCursor">
@@ -60,11 +66,6 @@
 			class="circle-cursor circle-cursor--outer"
 			:style="copacity"
 		></div>
-		<!--
-			<div ref="ctext" class="circle-cursor circle-cursor--text">
-				Mobiliario en obra
-			</div>
-		-->
 	</div>
 </template>
 
@@ -85,12 +86,6 @@ export default {
 		};
 	},
 	mounted() {
-		const cText = this.$refs.ctext;
-
-		TweenMax.to(cText, 0.2, {
-			scale: 0,
-		});
-
 		const plus = this.$refs.plusvg;
 
 		TweenMax.to(plus, 0.2, {

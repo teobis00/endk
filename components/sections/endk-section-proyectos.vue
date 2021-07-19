@@ -58,6 +58,9 @@
         float: right;
         margin-top: 27px;
       }
+      .mobile-only-proyectos {
+        display: none;
+      }
     }
   }
 
@@ -97,8 +100,8 @@
         border-radius: 50%;
         border: 1px solid black;
         position: absolute;
-        left: 7.2%;
-        top: 38%;
+        left: 50%;
+        top: 50%;
         transform: translateY(-25px) translateX(-25px;);
         transition: all 380ms cubic-bezier(0.33, 1, 0.68, 1);
         display: flex;
@@ -261,30 +264,106 @@
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
 }
+/*  Proyectos - Mob  */
+@media screen and (max-width: 580px) {
+  .endk-section-proyectos {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    padding-right: 35px;
+    padding-top: 40px;
+    .line2 {
+      width: 100%;
+      height: auto;
+      svg {
+        display: none !important;
+      }
+      .fixer {
+        display: inline-block;
+        width: 100%;
+        height: auto;
+        transform: none;
+        h1 {
+          position: relative;
+          left: 0px;
+          top: 0px;
+          clip-path: inset(0% 0% 0% 0%);
+          font-size: 51px;
+          line-height: 51px;
+          text-align: right;
+        }
+      }
+      .info-seccion {
+        transform: none !important;
+        opacity: 1 !important;
+        position: relative;
+        left: 0;
+        top: 0;
+        margin: 0;
+        width: 100%;
+        text-align: right;
+        .contenido-proyectos-inicial {
+          padding-left: 35px;
+        }
+        > .button {
+          display: none !important;
+        }
+        .mobile-only-proyectos {
+          display: inline-block;
+          button {
+            display: inline-block;
+            min-width: auto;
+            max-width: 400px !important;
+            width: auto;
+            padding: 0 20px;
+            white-space: nowrap;
+          }
+          margin-bottom: 50px;
+        }
+      }
+    }
+    .galeria-proyectos {
+      width: 100%;
+      position: relative;
+      left: 0px;
+      top: 0px;
+      transform: none !important;
+      display: inline-block;
+      .media-realative-proyectos {
+        position: relative;
+        height: auto;
+        width: 100vw;
+        animation: movemedia 22s linear alternate;
+        animation-iteration-count: infinite;
+        img {
+          width: 400vw;
+        }
+        .place-curve-text,
+        .marker {
+          display: none !important;
+        }
+        .full-column-name {
+          display: none !important;
+        }
+      }
+    }
+  }
+}
+
+@keyframes movemedia {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-300%);
+  }
+}
 </style>
 
 <template>
   <section class="endk-section endk-section-proyectos">
-    <!--
-    <div
-      ref="cinner"
-      class="circle-cursor circle-cursor--inner"
-      :style="copacity"
-    >
-      <div class="csvg" ref="plusvg">
-        <v-icon name="plus" scale="1.2" />
-      </div>
-    </div>
-    <div
-      ref="couter"
-      class="circle-cursor circle-cursor--outer"
-      :style="copacity"
-    ></div>
-
-    <div ref="ctext" class="circle-cursor circle-cursor--text">
-      Mobiliario en obra
-    </div>
-  -->
     <div class="line2">
       <svg
         viewBox="-1 0 100 40"
@@ -311,31 +390,30 @@
       </svg>
 
       <div class="fixer" :class="{ reveal: reveal }">
-        <h1>Proyectos</h1>
+        <h1>{{ titulo }}</h1>
       </div>
       <div class="info-seccion" :style="infoSectionStyle">
-        <p>
-          Desde la fase de diseño de tu proyecto hasta la ejecución e
-          implementación, procuramos dar cumplimiento a los plazos requeridos
-          por nuestros clientes. La construcción se hará bajo los estandares de
-          rápidez y eficacia más exigentes del mercado, principios que nos
-          caracterizan como empresa.
-        </p>
-        <p>
-          Otro principio rector es la sostenibilidad, que abarca la adecuada
-          elección de materiales y procesos constructivos. Esto se basa en la
-          gestión/utilización de materias primas sostenibles, la conservación de
-          la energía, la planificación, así como la usabilidad de los
-          componentes y todo el ciclo de vida, desde el diseño de este.
-        </p>
-
+        <div class="contenido-proyectos-inicial" v-html="bajada"></div>
         <button
           class="button"
           dc="Descargar proyectos"
+          v-on:click="downloadCatalogo"
           :style="buttonSectionStyle"
         >
           Descargar proyectos
         </button>
+
+        <div class="mobile-only-proyectos">
+          <button
+            v-for="(p, index) in lista_proyectos"
+            class="button"
+            :dc="p.titulo"
+            v-on:click="goInterior(p.path)"
+            :key="`pm${p.id}`"
+          >
+            {{ p.titulo }}
+          </button>
+        </div>
       </div>
     </div>
 
@@ -347,18 +425,26 @@
           v-on:mouseover="showCursor = true"
           v-on:mouseleave="showCursor = false"
         />
-        <div class="place-curve-text">
-          <endk-curve-text text="Mobiliario en Obra" :showtext="stext" />
+        <div
+          class="place-curve-text"
+          v-for="(p, index) in lista_proyectos"
+          :key="`m${p.id}`"
+          :style="{ left: `${p.position.left}%`, top: `${p.position.top}%` }"
+        >
+          <endk-curve-text :text="p.titulo" :showtext="actionHover(index)" />
         </div>
         <div
           class="marker"
-          v-on:mouseover="handleMouseEnter"
-          v-on:mouseleave="handleMouseLeave"
-          v-on:click="goInterior"
+          v-for="(p, index) in lista_proyectos"
+          :key="`p${p.id}`"
+          :style="{ left: `${p.position.left}%`, top: `${p.position.top}%` }"
+          v-on:mouseover="handleMouseEnter($event, p.id, index)"
+          v-on:mouseleave="handleMouseLeave($event, p.id, index)"
+          v-on:click="goInterior(p.path)"
         >
           <span></span>
         </div>
-
+        <!--
         <div
           class="marker2"
           :style="barTitleStyle"
@@ -368,7 +454,7 @@
         >
           <span></span>
         </div>
-
+        -->
         <div class="full-column-name" :class="{ reveal: showBar }">
           <div class="ptitle">
             Mobiliario
@@ -376,11 +462,6 @@
         </div>
       </div>
     </div>
-    <span style="align-self: flex-start; display:none;">
-      <p>N: {{ PColleccion }}</p>
-      <p>Custom: {{ customAvance }}</p>
-      <p>Custom * 2: {{ customAvanceTwice }}</p>
-    </span>
   </section>
 </template>
 
@@ -394,6 +475,7 @@ export default {
   name: "endk-section-proyectos",
   data() {
     return {
+      hovers: {},
       customAvance: 0,
       customAvanceTwice: 0,
       clientX: -100,
@@ -410,27 +492,29 @@ export default {
     endkCurveText,
   },
   mounted() {
-    const cText = this.$refs.ctext;
-
-    TweenMax.to(cText, 0.2, {
-      scale: 0,
-    });
-
-    const plus = this.$refs.plusvg;
-
-    TweenMax.to(plus, 0.2, {
-      scale: 0,
-    });
-
     this.bar = new ProgressBar.Path("#line-path2", {
       easing: "linear",
       duration: 200,
     });
 
-    // this.prepareCursor();
+    this.$store.getters["proyectos/getProyectos"].forEach((p) => {
+      this.hovers[`p${p.id}`] = false;
+    });
   },
 
   computed: {
+    catalogo() {
+      return this.$store.getters["proyectos/getCatalogo"];
+    },
+    titulo() {
+      return this.$store.getters["proyectos/getTitulo"];
+    },
+    bajada() {
+      return this.$store.getters["proyectos/getContenido"];
+    },
+    lista_proyectos() {
+      return this.$store.getters["proyectos/getProyectos"];
+    },
     barTitleStyle() {
       return {};
     },
@@ -476,6 +560,9 @@ export default {
     },
   },
   watch: {
+    hovers(n) {
+      console.log("fuck", n);
+    },
     third(n) {
       // console.log("third", n);
     },
@@ -500,11 +587,21 @@ export default {
     },
   },
   methods: {
-    goInterior() {
-      this.$router.push("/proyectos/mobiliario-en-obra");
+    downloadCatalogo() {
+      window.open(this.catalogo, "Download");
     },
-    handleMouseEnter(e) {
-      this.stext = true;
+    actionHover(index) {
+      return this.hovers[index];
+    },
+    goInterior(path) {
+      this.$router.push("/proyectos" + path);
+    },
+    handleMouseEnter(e, id, index) {
+      const objhover = {};
+      objhover[`p${id}`] = true;
+
+      this.hovers = Object.assign({}, this.hovers, objhover);
+      this.hovers[index] = true;
       const config = {
         stop: true,
         size: 52,
@@ -513,8 +610,13 @@ export default {
       };
       this.$store.commit("cursor/setCursor", { e, config });
     },
-    handleMouseLeave(e) {
-      this.stext = false;
+    handleMouseLeave(e, id, index) {
+      // this.stext = false;
+      //this.$set(this.hovers, `h${id}`, false);
+      const objhover = {};
+      objhover[`p${id}`] = true;
+      this.hovers = Object.assign({}, this.hovers, objhover);
+      this.hovers[index] = false;
       this.$store.commit("cursor/setCursor", false);
     },
     handleMouseEnter2(e, opt) {

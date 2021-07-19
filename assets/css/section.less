@@ -95,7 +95,7 @@
       font-size: calc(16px + 20%);
       line-height: calc(16px + 50%);
     }
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 580px) {
       line-height: 22px;
     }
   }
@@ -149,11 +149,15 @@
       }
     }
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 580px) {
       font-size: 20px;
       height: 35px;
       line-height: 20px;
       min-width: 160px;
+      &:before {
+        font-size: 20px;
+        line-height: 30px;
+      }
     }
   }
 }

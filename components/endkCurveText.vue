@@ -23,12 +23,12 @@ svg.textCurve {
 			fill="transparent"
 			style="background-color:transparent"
 		>
-			<path id="curveText" :d="linelength" stroke="transparent" />
+			<path :id="id" :d="linelength" stroke="transparent" />
 			<text width="0" :style="cTOpacity">
 				<textPath
 					style="transform:translate3d(0,0,0);"
 					alignment-baseline="bottom"
-					xlink:href="#curveText"
+					:xlink:href="`#${id}`"
 					id="text-path"
 					:startOffset="reveal"
 				>
@@ -45,8 +45,15 @@ export default {
 	name: "endkCurveText",
 	data() {
 		return {
+			id: "",
 			offset: { value: 100 },
 		};
+	},
+	mounted() {
+		function generateRandomFloatInRange(min, max) {
+			return Math.random() * (max - min + 1) + min;
+		}
+		this.id = `r${generateRandomFloatInRange(2.5, 10.75)}`;
 	},
 	props: ["text", "showtext"],
 	computed: {

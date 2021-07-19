@@ -1,7 +1,5 @@
 <template>
-  <div class="coleccion">
-    coleccion
-  </div>
+  <div class="coleccion"></div>
 </template>
 <script>
 export default {

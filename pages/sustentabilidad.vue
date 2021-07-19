@@ -1,7 +1,5 @@
 <template>
-  <div class="sustentabilidad">
-    sustentabilidad
-  </div>
+  <div class="sustentabilidad"></div>
 </template>
 <script>
 export default {

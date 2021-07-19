@@ -9,8 +9,16 @@ export default {
     },
     meta: [
       { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, user-scalable=no",
+      },
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "Somos una empresa boutique de diseño y arquitectura interior de alto estándar.",
+      },
     ],
     /*
     link: [
@@ -43,6 +51,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: "~/plugins/mobileset.js", mode: "server" },
     { src: "~/plugins/vueAnimXYZ.js" },
     { src: "~/plugins/vueAwesome.js" },
     { src: "~/plugins/both.js" },

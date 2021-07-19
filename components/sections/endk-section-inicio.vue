@@ -280,12 +280,8 @@
 </template>
 
 <script>
-import endkDataScroll from "~/components/endkDataScroll";
-
 export default {
-  components: {
-    endkDataScroll,
-  },
+  components: {},
   name: "endk-section-inicio",
   props: ["startAnim"],
   data() {

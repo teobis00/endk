@@ -1,7 +1,5 @@
 <template>
-  <div class="contacto">
-    contacto
-  </div>
+  <div class="contacto"></div>
 </template>
 <script>
 export default {

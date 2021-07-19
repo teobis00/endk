@@ -104,8 +104,41 @@
               display: block;
               width: 32px;
             }
-            svg {
-              align-self: center;
+            .chevron-container-left {
+              position: relative;
+              svg {
+                align-self: center;
+                position: relative;
+                z-index: 10;
+                /*
+                rect {
+                  transition: fill 200ms cubic-bezier(0.33, 1, 0.68, 1);
+                  will-change: fill;
+                }*/
+                &.floating {
+                  position: absolute;
+                  left: 0px;
+                  top: 0px;
+                  z-index: 11;
+                  clip-path: circle(0px at 50% 100%);
+                  opacity: 0;
+                  transition: clip-path 700ms cubic-bezier(0.65, 0, 0.35, 1),
+                    opacity 400ms cubic-bezier(0.65, 0, 0.35, 1);
+                  rect {
+                    fill: #1c1c1c;
+                  }
+                  &:hover {
+                    clip-path: circle(200% at 50% 0%);
+                    opacity: 1;
+                  }
+                }
+                &.chstatic:hover {
+                  & + .floating {
+                    clip-path: circle(200% at 50% 0%);
+                    opacity: 1;
+                  }
+                }
+              }
             }
 
             // prettier-ignore
@@ -127,8 +160,41 @@
               display: block;
               width: 32px;
             }
-            svg {
-              align-self: center;
+            .chevron-container-right {
+              position: relative;
+              svg {
+                align-self: center;
+                position: relative;
+                z-index: 10;
+                /*
+                rect {
+                  transition: fill 200ms cubic-bezier(0.33, 1, 0.68, 1);
+                  will-change: fill;
+                }*/
+                &.floating {
+                  position: absolute;
+                  left: 0px;
+                  top: 0px;
+                  z-index: 11;
+                  clip-path: circle(0px at 50% 100%);
+                  opacity: 0;
+                  transition: clip-path 700ms cubic-bezier(0.65, 0, 0.35, 1),
+                    opacity 400ms cubic-bezier(0.65, 0, 0.35, 1);
+                  rect {
+                    fill: #1c1c1c;
+                  }
+                  &:hover {
+                    clip-path: circle(200% at 50% 0%);
+                    opacity: 1;
+                  }
+                }
+                &.chstatic:hover {
+                  & + .floating {
+                    clip-path: circle(200% at 50% 0%);
+                    opacity: 1;
+                  }
+                }
+              }
             }
 
             // prettier-ignore
@@ -146,6 +212,22 @@
             grid-area: b;
             box-sizing: border-box;
             position: relative;
+
+            .next-media {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 0px;
+              top: 0px;
+              z-index: 20;
+              visibility: hidden;
+              img {
+                width: 100%;
+                height: 100%;
+                filter: grayscale(100%);
+                object-fit: cover;
+              }
+            }
 
             .place-out {
               width: 120%;
@@ -234,6 +316,7 @@
             p {
               transition: clip-path 400ms cubic-bezier(0.33, 1, 0.68, 1);
               clip-path: inset(0% 100% 0% 0%);
+              width: 110%;
               &.reveal {
                 clip-path: inset(0% 0% 0% 0%);
               }
@@ -262,8 +345,21 @@
                 height: 80%;
                 list-style: none;
                 display: flex;
+                overflow: hidden;
+                position: relative;
                 img {
                   width: 100%;
+                  filter: grayscale(100%);
+                  &.t1n {
+                    position: absolute;
+                    top: 0px;
+                    left: 100%;
+                  }
+                  &.t2n {
+                    position: absolute;
+                    top: 0px;
+                    left: 100%;
+                  }
                 }
               }
             }
@@ -272,7 +368,6 @@
             grid-area: d;
             box-sizing: border-box;
             padding-top: 5px;
-            transition: clip-path 400ms cubic-bezier(0.33, 1, 0.68, 1);
             clip-path: inset(0% 100% 0% 0%);
             z-index: 40;
             &.reveal {
@@ -280,7 +375,6 @@
             }
 
             // prettier-ignore
-            transition: opacity 800ms cubic-bezier(0.33, 1, 0.68, 1), transform 800ms cubic-bezier(0.33, 1, 0.68, 1);
             transform: translateY(0);
             opacity: 1;
             &.ly-detalle {
@@ -388,14 +482,14 @@
           transition: clip-path 400ms cubic-bezier(0.33, 1, 0.68, 1);
           clip-path: inset(0% 100% -1000% 0%);
           &.reveal {
-            clip-path: inset(0% 0% -1000% 0%);
+            clip-path: inset(0% -1000% -1000% 0%);
           }
         }
         .parrafo-content {
           transition: clip-path 400ms cubic-bezier(0.33, 1, 0.68, 1);
           clip-path: inset(0% 100% -1000% 0%);
           &.reveal {
-            clip-path: inset(0% 0% -1000% 0%);
+            clip-path: inset(0% -1000% -1000% 0%);
           }
           p {
             font-size: 14px;
@@ -422,10 +516,265 @@
   --xyz-in-duration: 200ms;
   --xyz-ease: cubic-bezier(0.33, 1, 0.68, 1);
 }
+
+/*  Proyectos - Mob  */
+@media screen and (max-width: 580px) {
+  .proyectos-interior {
+    .mobile-layer {
+      width: 100vw;
+      height: calc(100vh);
+      background-color: white;
+      position: fixed;
+      z-index: 120;
+      box-sizing: border-box;
+      padding-top: 80px;
+      nav.endk-breadcrumb {
+        display: inline-block;
+        box-sizing: border-box;
+        padding-left: 35px;
+        li {
+          list-style: none;
+          display: inline-block;
+          a {
+            text-decoration: none;
+            color: #000000;
+            &.active {
+              font-weight: 700;
+            }
+          }
+        }
+        &.invert {
+          li {
+            a {
+              color: white;
+            }
+          }
+        }
+      }
+      h2 {
+        font-size: 40px;
+        box-sizing: border-box;
+        padding: 20px 35px 10px 35px;
+      }
+      .bajada {
+        box-sizing: border-box;
+        padding: 20px 35px 10px 35px;
+        color: #7f7b6b;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .parrafos {
+        box-sizing: border-box;
+        padding: 0px 35px 10px 35px;
+        font-size: 13px;
+        font-weight: 300;
+        color: #1c1c1c;
+        margin-bottom: 20px;
+      }
+      figure {
+        position: relative;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+        &:before {
+          content: "";
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0px;
+          top: 0;
+          z-index: 1;
+          background-image: url("~/assets/img/plus_bg.svg");
+          background-repeat: no-repeat;
+          background-position: 50%;
+        }
+        img {
+          width: 100vw;
+          height: 60vw;
+          object-fit: cover;
+          filter: grayscale(100%);
+        }
+      }
+
+      .sep-mobp {
+        margin-top: 40px;
+        margin-bottom: 140px;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    .content-mobile-interior {
+      position: fixed;
+      width: 100vw;
+      height: calc(100vh);
+      z-index: 130;
+      background-color: white;
+      overflow-y: auto;
+      box-sizing: border-box;
+      padding-top: 71px;
+      box-sizing: border-box;
+      figure {
+        padding: 0;
+        margin: 0;
+        img {
+          width: 100%;
+          height: 50vh;
+          object-fit: cover;
+          opacity: 0;
+          transition: opacity 300ms cubic-bezier(0.65, 0, 0.35, 1);
+          &.reveal {
+            opacity: 1;
+          }
+        }
+      }
+      h3 {
+        font-size: 24;
+        font-weight: 700;
+        color: #000000;
+        padding: 20px 35px;
+        box-sizing: border-box;
+
+        clip-path: inset(0% 100% 0% 0%);
+        transition: clip-path 300ms cubic-bezier(0.65, 0, 0.35, 1);
+        &.reveal {
+          clip-path: inset(0% 0% 0% 0%);
+        }
+      }
+      .subtitulo {
+        font-size: 18px;
+        font-weight: 700;
+        color: #7f7b6b;
+        padding: 20px 35px;
+        box-sizing: border-box;
+        clip-path: inset(0% 100% 0% 0%);
+        transition: clip-path 300ms cubic-bezier(0.65, 0, 0.35, 1);
+        &.reveal {
+          clip-path: inset(0% 0% 0% 0%);
+        }
+      }
+      .parrafos {
+        font-size: 14px;
+        font-weight: 300;
+        color: #1c1c1c;
+        padding: 20px 35px;
+        box-sizing: border-box;
+        padding-bottom: 50px;
+        clip-path: inset(0% 100% 0% 0%);
+        transition: clip-path 300ms cubic-bezier(0.65, 0, 0.35, 1);
+        &.reveal {
+          clip-path: inset(0% 0% 0% 0%);
+        }
+      }
+      .nav-interior-mobil {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0px 35px;
+        margin-bottom: 130px;
+        button.chev {
+          outline: none;
+          border: transparent;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
 </style>
 <template>
   <div class="proyectos-interior interior">
-    <XyzTransition xyz="fade down-100%">
+    <XyzTransition xyz="fade down-100%" v-if="!dektop">
+      <div
+        ref="cmobileInterior"
+        class="content-mobile-interior"
+        v-show="interiordetallemob"
+      >
+        <div class="layer-mobile-inteirior">
+          <figure>
+            <img
+              :class="{ reveal: transitionInteriorMobi }"
+              :src="casos[index].main_caso"
+              alt=""
+            />
+          </figure>
+
+          <h3
+            v-html="casos[index].interior.titulo_trabajo"
+            :class="{ reveal: transitionInteriorMobi }"
+          ></h3>
+          <div
+            class="subtitulo"
+            :class="{ reveal: transitionInteriorMobi }"
+            v-html="casos[index].interior.bajada_trabajo"
+          ></div>
+          <div
+            class="parrafos"
+            v-html="interiorParrafo"
+            :class="{ reveal: transitionInteriorMobi }"
+          ></div>
+
+          <div class="nav-interior-mobil">
+            <button class="button" dc="Volver" v-on:click="volverDetalleMob()">
+              Volver
+            </button>
+
+            <button class="chev" v-on:click="moveMobilePrev()">
+              <v-icon name="chevron_left" scale="2.6" />
+            </button>
+            <button class="chev" v-on:click="moveMobileNext()">
+              <v-icon name="chevron_right" scale="2.6" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </XyzTransition>
+    <XyzTransition xyz="fade down-100%" v-if="!dektop">
+      <div
+        class="mobile-layer"
+        v-show="despliegueTotal"
+        :style="mobileLayerStyle"
+      >
+        <nav class="endk-breadcrumb" :class="{ invert: invertNav }">
+          <li>
+            <NuxtLink to="/">Inicio /</NuxtLink>
+          </li>
+          <li><NuxtLink to="/proyectos">Proyectos /</NuxtLink></li>
+          <li>
+            <NuxtLink to="/" class="active">{{ titulo }}</NuxtLink>
+          </li>
+        </nav>
+        <h2>{{ titulo }}</h2>
+        <div class="bajada">
+          {{ titulo_interior_proyecto }}
+        </div>
+        <div class="parrafos">
+          <p>
+            {{ descripcion_interior_proyecto }}
+          </p>
+        </div>
+
+        <figure v-for="(p, index) in casos" v-on:click="detalleMob(index)">
+          <img :src="p.main_caso" alt="" />
+        </figure>
+
+        <div class="sep-mobp">
+          <button class="button" dc="Volver" v-on:click="volver_proyectos">
+            Volver
+          </button>
+        </div>
+      </div>
+    </XyzTransition>
+    <!--
+    Don not touch bellow this point
+    -
+    -
+    -
+    -
+    -->
+    <XyzTransition xyz="fade down-100%" v-if="dektop">
       <div class="proyectos-despliegue" v-show="despliegueTotal">
         <div class="place-navbar">
           <XyzTransition xyz="fade up-100%">
@@ -434,7 +783,7 @@
                 <li>
                   <NuxtLink to="/">Inicio /</NuxtLink>
                 </li>
-                <li><NuxtLink to="/">Proyectos /</NuxtLink></li>
+                <li><NuxtLink to="/proyectos">Proyectos /</NuxtLink></li>
                 <li>
                   <NuxtLink to="/" class="active">{{ titulo }}</NuxtLink>
                 </li>
@@ -461,11 +810,25 @@
                 <span></span>
                 <span></span>
                 <XyzTransition xyz="fade up-5" class="ovxyz-custom-time3">
-                  <v-icon v-show="endkChevron" name="chevron_left" scale="2" />
+                  <div class="chevron-container-left">
+                    <v-icon
+                      v-show="endkChevron"
+                      v-on:click="prevProject()"
+                      name="chevron_left"
+                      scale="2"
+                      class="chstatic"
+                    />
+                    <v-icon
+                      class="floating"
+                      v-on:click="prevProject()"
+                      name="chevron_left"
+                      scale="2"
+                    />
+                  </div>
                 </XyzTransition>
                 <span></span>
               </div>
-              <div class="media">
+              <div class="media" :style="styleMedia">
                 <div class="place-out" v-on:mouseover="handleOut"></div>
                 <div class="marker-clip" :style="posMarker"></div>
                 <img
@@ -489,6 +852,7 @@
                     v-show="endkMainMedia"
                     :style="transitionStyle"
                     :src="media.current_main"
+                    ref="floatMedia"
                     alt=""
                   />
                 </XyzTransition>
@@ -498,6 +862,10 @@
                   :src="media.current_main"
                   alt=""
                 />
+
+                <div class="next-media" ref="nextMedia">
+                  <img :src="media.placeNextMedia" alt="" rel="preload" />
+                </div>
               </div>
               <div class="info">
                 <span :class="{ reveal: endkSubTitle }">{{
@@ -505,6 +873,10 @@
                 }}</span>
                 <p class="desc" :class="{ reveal: endkParrafo }">
                   {{ descripcion_interior_proyecto }}
+                  <!--
+                    {{ index }} -
+                    {{ auxBack }}
+                  -->
                 </p>
               </div>
 
@@ -512,27 +884,47 @@
                 <nav class="proyecto-carusel">
                   <li>
                     <XyzTransition
-                      xyz="fade down-25%"
+                      xyz="fade down-50%"
                       class="ovxyz-custom-time2"
                     >
                       <img
+                        class="t1m"
                         v-if="endkT1"
-                        src="~/assets/img/thumb1_p.jpg"
-                        alt=""
+                        :src="media.placeNextThumb1"
+                        alt="t1"
+                        ref="t1m"
+                        rel="preload"
                       />
                     </XyzTransition>
+                    <img
+                      class="t1n"
+                      v-if="endkT1"
+                      :src="media.NextThumb1"
+                      alt=""
+                      ref="t1n"
+                    />
                   </li>
                   <li>
                     <XyzTransition
-                      xyz="fade down-25%"
+                      xyz="fade down-50%"
                       class="ovxyz-custom-time2"
                     >
                       <img
+                        class="t2m"
                         v-if="endkT2"
-                        src="~/assets/img/thumb2_p.jpg"
-                        alt=""
+                        :src="media.placeNextThumb2"
+                        alt="t2"
+                        rel="preload"
+                        ref="t2m"
                       />
                     </XyzTransition>
+                    <img
+                      class="t2n"
+                      v-if="endkT2"
+                      :src="media.NextThumb2"
+                      alt=""
+                      ref="t2n"
+                    />
                   </li>
                 </nav>
               </div>
@@ -540,19 +932,20 @@
               <div
                 class="info-bottom"
                 :class="{ reveal: endkInfoBotom, 'ly-detalle': lyDetalle }"
+                :style="styleInfoBotom"
               >
                 <div class="line-date">
                   <div class="line">
                     <span></span>
                   </div>
                   <div class="date">
-                    Sep 24, 2021
+                    {{ dataInfoBotom.fecha }}
                   </div>
                 </div>
 
                 <div class="house-name-owner">
-                  <span>Casa Perez Maggi</span>
-                  <p>Pastor Fernandez</p>
+                  <span>{{ dataInfoBotom.line_1 }}</span>
+                  <p>{{ dataInfoBotom.line_2 }}</p>
                 </div>
               </div>
               <div class="rc" :class="{ 'ly-detalle': lyDetalle }">
@@ -560,7 +953,21 @@
                 <span></span>
                 <span></span>
                 <XyzTransition xyz="fade up-5" class="ovxyz-custom-time3">
-                  <v-icon v-show="endkChevron" name="chevron_right" scale="2" />
+                  <div class="chevron-container-right">
+                    <v-icon
+                      v-show="endkChevron"
+                      v-on:click="nextProject()"
+                      name="chevron_right"
+                      scale="2"
+                      class="chstatic"
+                    />
+                    <v-icon
+                      v-on:click="nextProject()"
+                      class="floating"
+                      name="chevron_right"
+                      scale="2"
+                    />
+                  </div>
                 </XyzTransition>
                 <span></span>
               </div>
@@ -569,46 +976,39 @@
         </div>
         <div class="place-bottom" :class="{ 'ly-detalle': lyDetalle }">
           <XyzTransition xyz="fade down-100%">
-            <button v-if="endkTopNavbar" class="button">
+            <button
+              dc="Descargar proyectos"
+              v-if="endkTopNavbar"
+              class="button"
+              v-on:click="downloadCatalogo"
+            >
               Descargar proyectos
             </button>
           </XyzTransition>
         </div>
-
+        <!--
+        interiorTitle: "",
+      interiorSubTitle: "",
+      interiorParrafo: "",
+        -->
         <div class="place-detalle" :style="interiorStyleTransition">
           <div class="int-place-detalle">
-            <h4 class="alt" :class="{ reveal: interiorRevealTitle }">
-              Revestimiento <br />de living
-            </h4>
+            <h4
+              class="alt"
+              :class="{ reveal: interiorRevealTitle }"
+              v-html="interiorTitle"
+            ></h4>
             <br />
-            <span class="subtitulo" :class="{ reveal: interiorRevealSubTitle }">
-              Revestimiento de living <br />
-              Lo Barnechea,<br />
-              Región Metropolitana<br /><br />
-              Sept 24, 2021.
-            </span>
+            <span
+              class="subtitulo"
+              :class="{ reveal: interiorRevealSubTitle }"
+              v-html="interiorSubTitle"
+            ></span>
             <div
               class="parrafo-content"
               :class="{ reveal: interiorRevealParrafo }"
-            >
-              <p>Revestimiento de madera <br />Clearwood.</p>
-              <p>
-                Dimensiones de largos fijos 4.5 mt,<br />
-                ancho de 10 cm, espesor de 1,5 cm<br />
-                y cantería de 10 mm.
-              </p>
-              <p>
-                Montaje en subestructura de<br />
-                metalcon de 4,5 x 4,5 cm.
-              </p>
-              <p>Tablas machihembradas.</p>
-              <p>
-                Acabado con barniz hydrocrome<br />
-                brillo nº 10, tinte color nogal con<br />
-                protección UV.
-              </p>
-              <p>Lijado grano 180.</p>
-            </div>
+              v-html="interiorParrafo"
+            ></div>
           </div>
         </div>
       </div>
@@ -617,23 +1017,57 @@
 </template>
 <script>
 import axios from "axios";
+import { TweenMax } from "gsap";
+import slugify from "slugify";
 
 export default {
   meta: {
     section: "proyectos-interior",
     parent: "proyectos",
   },
-  async asyncData({ route }) {
-    const { section } = route.params;
+  async asyncData({ route, store }) {
+    const { data: dataParent } = await axios.get(
+      `https://static.endemik.cl/proyectos`
+    );
+    if (dataParent.hasOwnProperty("lista_proyectos")) {
+      store.commit("proyectos/setProyectos", dataParent.lista_proyectos);
+      store.commit("proyectos/setCatalogo", dataParent.documento_proyectos);
+      store.commit("proyectos/setTitulo", dataParent.titulo);
+      store.commit("proyectos/setContenido", dataParent.texto_inicial);
+    }
+
+    const { section, detalle } = route.params;
     if (section === "proyectos-interior") {
       return {};
     }
-    const { data } = await axios.get(`https://static.endemik.cl/${section}`);
-    // console.log(data);
+
+    let { data } = await axios.get(`https://static.endemik.cl/${section}`);
+    data.section = section;
+    if (detalle) {
+      let casos = data.casos;
+      let intialIndex = casos.findIndex((i) => slugify(i.line_1) === detalle);
+      data.detalle = true;
+      data.interiordetallemob = true;
+      data.index = intialIndex;
+
+      if (intialIndex < 0) {
+        return {};
+      }
+
+      return data;
+    }
+
     return data;
   },
   data() {
     return {
+      transitionInteriorMobi: true,
+      interiordetallemob: false,
+      interiorTitle: "",
+      interiorSubTitle: "",
+      interiorParrafo: "",
+      proximo: 0,
+      arrayMedia: [],
       despliegueTotal: false,
       endkTopNavbar: false,
       endkTitle: false,
@@ -658,10 +1092,52 @@ export default {
       invertNav: false,
       media: {
         current_main: "",
+        placeNextMedia:
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAAXNSR0IArs4c6QAAABpJREFUGBlj/G9p+Z+BBMBEglqw0lENxIQYAMNdAoDZFtz0AAAAAElFTkSuQmCC",
+        overhidden: false,
+        placeNextThumb1: "",
+        placeNextThumb2: "",
+        NextThumb1: "",
+        NextThumb2: "",
       },
+      isAnimating: false,
+      auxBack: 0,
+      auxNext: 0,
+      dataInfoBotom: {
+        line_1: "",
+        line_2: "",
+        fecha: "",
+      },
+      index: 0,
     };
   },
   computed: {
+    mobileLayerStyle() {
+      return this.interiordetallemob
+        ? { "overflow-y": "hidden" }
+        : { "overflow-y": "auto" };
+    },
+    dektop() {
+      return !this.$store.getters["device/getDevice"].isMobile;
+    },
+    catalogo() {
+      return this.$store.getters["proyectos/getCatalogo"];
+    },
+    styleInfoBotom() {
+      if (this.isAnimating) {
+        return {
+          transition: `opacity 300ms cubic-bezier(0.33, 1, 0.68, 1), transform 300ms cubic-bezier(0.33, 1, 0.68, 1), clip-path 300ms cubic-bezier(0.33, 1, 0.68, 1)`,
+        };
+      }
+      return {
+        transition: `opacity 800ms cubic-bezier(0.33, 1, 0.68, 1), transform 800ms cubic-bezier(0.33, 1, 0.68, 1), clip-path 600ms cubic-bezier(0.33, 1, 0.68, 1)`,
+      };
+    },
+    styleMedia() {
+      //return { overflow: "visible" };
+
+      return { overflow: this.media.overhidden ? "hidden" : "visible" };
+    },
     interiorStyleTransition() {
       if (this.placeInterior) {
         return {
@@ -670,6 +1146,10 @@ export default {
       }
     },
     transitionStyle() {
+      if (this.isAnimating) {
+        return { transition: "none" };
+      }
+
       if (this.transInterior) {
         let newW = Math.round(this.transOpt.w * 1.3);
         let diffW = newW - this.transOpt.w;
@@ -685,6 +1165,17 @@ export default {
           height: `${this.$store.getters["app/getWindowHeight"]}px`,
         };
       }
+
+      /*
+      if (this.lyDetalle) {
+        console.log("aqui");
+        return {
+          transition: `transition: transform 400ms cubic-bezier(0.33, 1, 0.68, 1),
+                filter 400ms cubic-bezier(0.33, 1, 0.68, 1),
+                width 400ms cubic-bezier(0.33, 1, 0.68, 1),
+                height 400ms cubic-bezier(0.33, 1, 0.68, 1);`,
+        };
+      }*/
 
       return { transform: "matrix(1, 0, 0, 1, 0,0)" };
     },
@@ -720,22 +1211,141 @@ export default {
       };
     },
   },
+  watch: {
+    auxNext(n) {
+      this.proximo = n;
+    },
+    proximo(n) {
+      console.log("proximo", n);
+    },
+  },
+  created() {
+    if (this.casos) {
+      this.arrayMedia = this.casos.map((c) => {
+        return { b: c.main_caso, s: c.thumb_caso };
+      });
+    }
+  },
   mounted() {
-    console.log("loaded coleccion detalle");
+    // console.log("loaded proyectos detalle");
     this.showLayout();
-    window.onpopstate = (e) => {
-      console.log("e", e);
-    };
+    // window.onpopstate = (e) => {
+    // console.log("e", e);
+    // };
 
     this.imageTarget = this.$refs.placeMedia;
 
     if (this.casos) {
-      this.media.current_main = this.casos[0].main_caso;
+      this.media.current_main = this.arrayMedia[this.index].b;
+      if (this.index > 0) {
+        if (this.arrayMedia.length > this.index + 1) {
+          this.media.placeNextThumb1 = this.arrayMedia[this.index + 1].s;
+        }
+
+        if (this.arrayMedia.length === this.index + 1) {
+          this.media.placeNextThumb1 = this.arrayMedia[0].s;
+          this.media.placeNextThumb2 = this.arrayMedia[1].s;
+        }
+
+        if (this.arrayMedia.length === this.index + 2) {
+          this.media.placeNextThumb2 = this.arrayMedia[0].s;
+        }
+        if (this.arrayMedia.length > this.index + 2) {
+          this.media.placeNextThumb1 = this.arrayMedia[this.index + 1].s;
+          this.media.placeNextThumb2 = this.arrayMedia[this.index + 2].s;
+        }
+      } else {
+        this.media.placeNextThumb1 = this.arrayMedia[1].s;
+        this.media.placeNextThumb2 = this.arrayMedia[2].s;
+      }
+
+      this.interiorTitle = this.casos[this.index].interior.titulo_trabajo;
+      this.interiorSubTitle = this.casos[this.index].interior.bajada_trabajo;
+      // prettier-ignore
+      this.interiorParrafo = this.casos[this.index].interior.descripcion_trabajo;
+      this.dataInfoBotom.line_1 = this.casos[this.index].line_1;
+      this.dataInfoBotom.line_2 = this.casos[this.index].line_2;
+      this.dataInfoBotom.fecha = this.casos[this.index].fecha;
     } else {
       this.$router.push("/404");
     }
+
+    if (this.detalle && this.dektop) {
+      const trigger = this.$refs.placeMedia;
+      setTimeout(() => {
+        trigger.click();
+      }, 2000);
+    }
   },
   methods: {
+    moveMobilePrev() {
+      this.transitionInteriorMobi = false;
+
+      setTimeout(() => {
+        this.index =
+          this.index - 1 === -1 ? this.arrayMedia.length - 1 : this.index - 1;
+        this.transitionInteriorMobi = true;
+
+        window.history.pushState(
+          "1",
+          "Proyectos - Detalle",
+          "/proyectos/" +
+            this.section +
+            "/" +
+            slugify(this.casos[this.index].line_1)
+        );
+      }, 320);
+    },
+    moveMobileNext() {
+      this.transitionInteriorMobi = false;
+
+      setTimeout(() => {
+        this.index =
+          this.index + 1 === this.arrayMedia.length ? 0 : this.index + 1;
+        this.transitionInteriorMobi = true;
+        window.history.pushState(
+          "1",
+          "Proyectos - Detalle",
+          "/proyectos/" +
+            this.section +
+            "/" +
+            slugify(this.casos[this.index].line_1)
+        );
+      }, 320);
+    },
+    volverDetalleMob() {
+      setTimeout(() => {
+        this.$refs.cmobileInterior.scrollTop = 0;
+      }, 400);
+      this.interiordetallemob = false;
+
+      window.history.pushState(
+        "1",
+        "Proyectos - Detalle",
+        "/proyectos/" + this.section
+      );
+    },
+    detalleMob(index) {
+      this.index = index;
+      this.interiorTitle = this.casos[this.index].interior.titulo_trabajo;
+      this.interiorSubTitle = this.casos[this.index].interior.bajada_trabajo;
+      this.interiorParrafo = this.casos[
+        this.index
+      ].interior.descripcion_trabajo;
+
+      this.dataInfoBotom = this.casos[this.index];
+
+      this.interiordetallemob = true;
+
+      window.history.pushState(
+        "1",
+        "Proyectos - Detalle",
+        "/proyectos/" + this.section + "/" + slugify(this.dataInfoBotom.line_1)
+      );
+    },
+    downloadCatalogo() {
+      window.open(this.catalogo, "Download");
+    },
     setMotionDetalle() {
       if (this.lyDetalle) {
         this.detalleRemove();
@@ -796,12 +1406,16 @@ export default {
       setTimeout(() => {
         this.invertNav = !this.invertNav;
       }, 100);
-
-      window.history.pushState(
-        "1",
-        "Proyectos - Detalle",
-        "/proyectos/mobiliario-en-obra/casa-perez-maggi"
-      );
+      if (this.lyDetalle) {
+        window.history.pushState(
+          "1",
+          "Proyectos - Detalle",
+          "/proyectos/" +
+            this.section +
+            "/" +
+            slugify(this.dataInfoBotom.line_1)
+        );
+      }
     },
     handleOut(e) {
       this.showLayer = false;
@@ -812,15 +1426,17 @@ export default {
       this.imageY = Math.round(e.clientY - elBounds.top);
     },
     handleMask(e) {
-      if (!this.lyDetalle) {
-        this.showLayer = true;
-        const config = {
-          stop: false,
-          size: 40,
-          plusSize: 2,
-          showOutter: false,
-        };
-        this.$store.commit("cursor/setCursor", { e, config });
+      if (!this.isAnimating) {
+        if (!this.lyDetalle) {
+          this.showLayer = true;
+          const config = {
+            stop: false,
+            size: 40,
+            plusSize: 2,
+            showOutter: false,
+          };
+          this.$store.commit("cursor/setCursor", { e, config });
+        }
       }
     },
     handleMaskLeave(e) {
@@ -830,6 +1446,15 @@ export default {
     volver_proyectos() {
       if (this.lyDetalle) {
         this.setMotionDetalle();
+        /*setTimeout(() => {
+          
+        }, 800);*/
+        console.log("volver");
+        window.history.pushState(
+          "1",
+          "Proyectos - Detalle",
+          "/proyectos/" + this.section
+        );
       } else {
         this.endkTopNavbar = false;
 
@@ -880,6 +1505,312 @@ export default {
       setTimeout(() => {
         this.showContent();
       }, 600);
+    },
+    nextProject() {
+      if (!this.isAnimating) {
+        this.endkInfoBotom = false;
+        this.moveThumbsNext();
+        this.moveMainNext();
+        const cindex =
+          this.index + 1 === this.arrayMedia.length ? 0 : this.index + 1;
+        setTimeout(() => {
+          this.dataInfoBotom.line_1 = this.casos[cindex].line_1;
+          this.dataInfoBotom.line_2 = this.casos[cindex].line_2;
+          this.dataInfoBotom.fecha = this.casos[cindex].fecha;
+          this.endkInfoBotom = true;
+        }, 320);
+      }
+      this.changeDetalle();
+    },
+    prevProject() {
+      if (!this.isAnimating) {
+        this.endkInfoBotom = false;
+        this.moveMainPrev();
+        this.moveThumbsPrev();
+
+        setTimeout(() => {
+          this.dataInfoBotom.line_1 = this.casos[this.proximo].line_1;
+          this.dataInfoBotom.line_2 = this.casos[this.proximo].line_2;
+          this.dataInfoBotom.fecha = this.casos[this.proximo].fecha;
+          this.endkInfoBotom = true;
+        }, 320);
+      }
+      this.changeDetalle();
+    },
+    moveThumbsNext() {
+      const t1m = this.$refs.t1m;
+      const t2m = this.$refs.t2m;
+      const t1n = this.$refs.t1n;
+      const t2n = this.$refs.t2n;
+
+      let index_next = 0;
+
+      if (this.index + 2 < this.arrayMedia.length) {
+        this.media.NextThumb1 = this.arrayMedia[this.index + 2].s;
+        index_next = this.index + 2;
+      }
+      if (this.index + 2 === this.arrayMedia.length) {
+        this.media.NextThumb1 = this.arrayMedia[0].s;
+        index_next = 0;
+      }
+      if (this.index + 2 > this.arrayMedia.length) {
+        this.media.NextThumb1 = this.arrayMedia[1].s;
+        index_next = 1;
+      }
+
+      this.media.NextThumb2 =
+        index_next + 1 === this.arrayMedia.length
+          ? this.arrayMedia[0].s
+          : this.arrayMedia[index_next + 1].s;
+
+      TweenMax.set(t1n, {
+        left: "100%",
+        x: "0%",
+      });
+      TweenMax.to(t1n, 0.6, {
+        x: "-100%",
+        ease: "linear.easeNone",
+      });
+      TweenMax.to(t1m, 0.6, {
+        x: "-100%",
+        ease: "linear.easeNone",
+      });
+
+      TweenMax.set(t2n, {
+        left: "100%",
+      });
+      TweenMax.to(t2n, 0.6, {
+        x: "-100%",
+        ease: "linear.easeNone",
+      });
+      TweenMax.to(t2m, 0.6, {
+        x: "-100%",
+        ease: "linear.easeNone",
+      });
+
+      setTimeout(() => {
+        this.media.placeNextThumb1 = this.media.NextThumb1;
+        this.media.placeNextThumb2 = this.media.NextThumb2;
+        TweenMax.set(t1n, {
+          left: "100%",
+          x: "0",
+        });
+        TweenMax.set(t1m, {
+          left: "100%",
+          x: "0",
+        });
+
+        TweenMax.set(t2n, {
+          left: "100%",
+          x: "0",
+        });
+        TweenMax.set(t2m, {
+          left: "100%",
+          x: "0",
+        });
+      }, 700);
+    },
+    moveMainNext() {
+      this.auxNext =
+        this.index + 1 === this.arrayMedia.length ? 0 : this.index + 1;
+
+      this.isAnimating = true;
+      this.media.overhidden = true;
+      this.media.placeNextMedia =
+        this.index + 1 === this.arrayMedia.length
+          ? this.arrayMedia[0].b
+          : this.arrayMedia[this.index + 1].b;
+
+      const nextMedia = this.$refs.nextMedia;
+      const floatMedia = this.$refs.floatMedia;
+
+      TweenMax.set(nextMedia, {
+        left: "100%",
+        x: "0%",
+        visibility: "visible",
+      });
+      TweenMax.to(floatMedia, 0.6, {
+        x: "-100%",
+        ease: "linear.easeNone",
+      });
+
+      TweenMax.to(nextMedia, 0.6, {
+        x: "-100%",
+        ease: "linear.easeNone",
+      });
+
+      setTimeout(() => {
+        this.media.current_main = this.media.placeNextMedia;
+        TweenMax.set(floatMedia, {
+          x: "0%",
+        });
+        TweenMax.set(nextMedia, {
+          left: "0",
+          visibility: "hidden",
+        });
+
+        this.isAnimating = false;
+        this.media.overhidden = false;
+        this.index =
+          this.index + 1 === this.arrayMedia.length ? 0 : this.index + 1;
+      }, 700);
+    },
+    moveMainPrev() {
+      this.auxBack =
+        this.index - 1 < 0
+          ? this.arrayMedia.length - (this.index + 1)
+          : this.index - 1;
+
+      this.proximo =
+        this.index - 1 < 0
+          ? this.arrayMedia.length - (this.index + 1)
+          : this.index - 1;
+
+      this.isAnimating = true;
+      this.media.overhidden = true;
+      this.media.placeNextMedia =
+        this.index - 1 < 0
+          ? this.arrayMedia[this.arrayMedia.length - (this.index + 1)].b
+          : this.arrayMedia[this.index - 1].b;
+
+      const nextMedia = this.$refs.nextMedia;
+      const floatMedia = this.$refs.floatMedia;
+
+      TweenMax.set(nextMedia, {
+        right: "100%",
+        x: "-100%",
+        visibility: "visible",
+      });
+
+      TweenMax.to(floatMedia, 0.6, {
+        x: "100%",
+        ease: "linear.easeNone",
+      });
+
+      TweenMax.to(nextMedia, 0.6, {
+        x: "0%",
+        ease: "linear.easeNone",
+      });
+
+      setTimeout(() => {
+        this.media.current_main = this.media.placeNextMedia;
+        TweenMax.set(floatMedia, {
+          x: "0%",
+        });
+        TweenMax.set(nextMedia, {
+          right: "0",
+          visibility: "hidden",
+        });
+
+        this.isAnimating = false;
+        this.media.overhidden = false;
+        this.index =
+          this.index - 1 === -1 ? this.arrayMedia.length - 1 : this.index - 1;
+      }, 700);
+    },
+    moveThumbsPrev() {
+      const t1m = this.$refs.t1m;
+      const t2m = this.$refs.t2m;
+      const t1n = this.$refs.t1n;
+      const t2n = this.$refs.t2n;
+
+      const backdiff1 =
+        this.arrayMedia.length - (this.auxBack + 2) < 0
+          ? this.arrayMedia.length - (this.auxBack + 1)
+          : this.auxBack + 1;
+
+      // console.log("backdiff1", backdiff1);
+      this.media.NextThumb1 = this.arrayMedia[backdiff1].s;
+      if (backdiff1 === 0) {
+        // console.log("calculo 2", 1);
+        this.media.NextThumb2 = this.arrayMedia[1].s;
+      } else if (backdiff1 === this.arrayMedia.length - 1) {
+        // console.log("calculo 2", 0);
+        this.media.NextThumb2 = this.arrayMedia[0].s;
+      } else {
+        // console.log("calculo 2", backdiff1 + 1);
+        this.media.NextThumb2 = this.arrayMedia[backdiff1 + 1].s;
+      }
+
+      TweenMax.set(t1n, {
+        left: "0%",
+        x: "-100%",
+      });
+      TweenMax.to(t1n, 0.6, {
+        x: "0%",
+        ease: "linear.easeNone",
+      });
+      TweenMax.to(t1m, 0.6, {
+        x: "100%",
+        ease: "linear.easeNone",
+      });
+
+      TweenMax.set(t2n, {
+        left: "0%",
+        x: "-100%",
+      });
+      TweenMax.to(t2n, 0.6, {
+        x: "0%",
+        ease: "linear.easeNone",
+      });
+      TweenMax.to(t2m, 0.6, {
+        x: "100%",
+        ease: "linear.easeNone",
+      });
+
+      setTimeout(() => {
+        this.media.placeNextThumb1 = this.media.NextThumb1;
+        this.media.placeNextThumb2 = this.media.NextThumb2;
+        TweenMax.set(t1n, {
+          left: "100%",
+          x: "0",
+        });
+        TweenMax.set(t1m, {
+          left: "100%",
+          x: "0",
+        });
+
+        TweenMax.set(t2n, {
+          left: "100%",
+          x: "0",
+        });
+        TweenMax.set(t2m, {
+          left: "100%",
+          x: "0",
+        });
+      }, 700);
+    },
+    changeDetalle() {
+      if (this.lyDetalle) {
+        // console.log("change");
+        this.interiorRevealTitle = false;
+        this.interiorRevealSubTitle = false;
+        this.interiorRevealParrafo = false;
+
+        setTimeout(() => {
+          // prettier-ignore
+          this.interiorTitle = this.casos[this.proximo].interior.titulo_trabajo;
+          // prettier-ignore
+          this.interiorSubTitle = this.casos[this.proximo].interior.bajada_trabajo;
+          // prettier-ignore
+          this.interiorParrafo = this.casos[this.proximo].interior.descripcion_trabajo;
+        }, 600);
+
+        setTimeout(() => {
+          this.interiorRevealTitle = true;
+          this.interiorRevealSubTitle = true;
+          this.interiorRevealParrafo = true;
+
+          window.history.pushState(
+            "1",
+            "Proyectos - Detalle",
+            "/proyectos/" +
+              this.section +
+              "/" +
+              slugify(this.casos[this.proximo].line_1)
+          );
+        }, 650);
+      }
     },
   },
 };

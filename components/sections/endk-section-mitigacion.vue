@@ -118,6 +118,9 @@
         left: 0px;
         top: 0px;
         transform: translateX(35.8vw) translateY(-9vw);
+        .endk-small-texture {
+          display: none;
+        }
         ul {
           list-style: none;
           padding: 0;
@@ -135,6 +138,9 @@
         left: 0px;
         top: 0px;
         transform: translateX(81vw) translateY(-2vw);
+        .endk-small-texture {
+          display: none;
+        }
         p {
           strong {
             color: #7f7b6b;
@@ -147,6 +153,9 @@
         left: 0px;
         top: 0px;
         transform: translateX(120.5vw) translateY(-8.5vw);
+        .endk-small-texture {
+          display: none;
+        }
         p {
           strong {
             color: #7f7b6b;
@@ -158,6 +167,9 @@
         left: 0px;
         top: 0px;
         transform: translateX(162.8vw) translateY(0.5vw);
+        .endk-small-texture {
+          display: none;
+        }
         p {
           strong {
             color: #7f7b6b;
@@ -170,6 +182,9 @@
         left: 0px;
         top: 0px;
         transform: translateX(196.8vw) translateY(-9vw);
+        .endk-small-texture {
+          display: none;
+        }
         p {
           strong {
             color: #7f7b6b;
@@ -241,6 +256,164 @@
     */
   }
 }
+
+@media screen and (max-width: 580px) {
+  .endk-section-mitigacion {
+    display: inline-block;
+    .pos-bg-section-mitigacion-fixed,
+    .pos-bg-section-mitigacion {
+      display: none;
+    }
+    .pos-section-mitigacion {
+      display: inline-block;
+      height: auto;
+      margin-top: 30px;
+      background-image: url("~/assets/img/mitigacion_mobile.jpg");
+      background-size: contain;
+      background-position: center top;
+      padding-bottom: 50px;
+      width: 100%;
+      .sep-inicio {
+        display: none;
+      }
+      .path {
+        display: none;
+      }
+      .info-relative-mit {
+        display: inline-block;
+        grid-area: none;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 35px;
+        .subtitle {
+          display: inline-block;
+          width: 100%;
+          transform: none;
+          left: 0px;
+          top: 0;
+          position: relative;
+          h3 {
+            text-align: left;
+            font-size: 19px;
+          }
+        }
+        .infor-start-mit {
+          width: 100%;
+          transform: none;
+          left: 0px;
+          top: 0px;
+          position: relative;
+          height: auto;
+          h1 {
+            position: relative;
+            font-size: 51px;
+            line-height: 51px;
+          }
+          h4 {
+            font-size: 18px;
+          }
+          .button {
+            display: inline-block;
+            min-width: auto;
+            max-width: 400px !important;
+            width: auto;
+            padding: 0 20px;
+            white-space: nowrap;
+          }
+        }
+
+        .ton {
+          margin-top: 70px;
+          margin-bottom: 50px;
+          position: relative;
+          top: 0px;
+          display: inline-block;
+          width: 100%;
+          transform: none;
+          left: 0px;
+          text-align: right;
+          .endk-small-texture {
+            display: inline-block;
+          }
+          h4 {
+            font-size: 19px;
+            line-height: 22px;
+          }
+          p {
+            br {
+              display: none;
+            }
+          }
+        }
+        .metros {
+          position: relative;
+          top: 0px;
+          display: inline-block;
+          width: 100%;
+          transform: none;
+          left: 0px;
+          margin-bottom: 50px;
+          .endk-small-texture {
+            display: inline-block;
+          }
+          h4 {
+            font-size: 19px;
+            line-height: 22px;
+          }
+        }
+        .ha {
+          position: relative;
+          top: 0px;
+          display: inline-block;
+          width: 100%;
+          transform: none;
+          left: 0px;
+          text-align: right;
+          margin-bottom: 50px;
+          .endk-small-texture {
+            display: inline-block;
+          }
+          h4 {
+            font-size: 19px;
+            line-height: 22px;
+          }
+        }
+        .per {
+          position: relative;
+          top: 0px;
+          display: inline-block;
+          width: 100%;
+          transform: none;
+          left: 0px;
+          margin-bottom: 50px;
+          .endk-small-texture {
+            display: inline-block;
+          }
+          h4 {
+            font-size: 19px;
+            line-height: 22px;
+          }
+        }
+        .final {
+          position: relative;
+          top: 0px;
+          display: inline-block;
+          width: 100%;
+          transform: none;
+          left: 0px;
+          text-align: right;
+          .endk-small-texture {
+            display: inline-block;
+          }
+          h4 {
+            font-size: 19px;
+            line-height: 22px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>
 
 <template>
@@ -276,6 +449,7 @@
         </div>
 
         <div class="ton">
+          <endk-small-texture text="33 ton" align="end" />
           <h4>
             Gases de efecto invernadero <br />
             neutralizados al año
@@ -308,6 +482,7 @@
         </div>
 
         <div class="metros">
+          <endk-small-texture text="200 m2" align="start" />
           <h4>
             Preservación de árboles<br />
             nativos con la fundación PIC.
@@ -330,6 +505,7 @@
         </div>
 
         <div class="ha">
+          <endk-small-texture text="120 ha" align="end" />
           <h4>
             Banco de compensación de <br />
             especies protegidas.
@@ -356,6 +532,7 @@
         </div>
 
         <div class="per">
+          <endk-small-texture text="90%" align="start" />
           <h4>
             De desechos reciclados<br />
             o reutilizados.
@@ -376,6 +553,7 @@
           </p>
         </div>
         <div class="final">
+          <endk-small-texture text="1 ha" align="end" />
           <h4>
             De árboles plantados en<br />
             Chiloé y Buchupureo.
@@ -410,6 +588,7 @@
 
 <script>
 import endkLargePath from "~/components/endkLargePath";
+import endkSmallTexture from "~/components/endkSmallTexture";
 
 export default {
   name: "endk-section-mitigacion",
@@ -422,6 +601,7 @@ export default {
   },
   components: {
     endkLargePath,
+    endkSmallTexture,
   },
   mounted() {
     /*

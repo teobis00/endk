@@ -1,7 +1,5 @@
 <template>
-  <div class="proyectos">
-    nosotros
-  </div>
+  <div class="nosotros"></div>
 </template>
 <script>
 export default {

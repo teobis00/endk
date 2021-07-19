@@ -73,9 +73,10 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 580px) {
   .endk-section-colleccion {
     align-items: flex-start;
+    height: auto;
     .endk-lain-collection {
       display: inline-block;
       padding-left: 35px;
@@ -179,12 +180,8 @@
 </template>
 
 <script>
-import endkDataScroll from "~/components/endkDataScroll";
-
 export default {
-  components: {
-    endkDataScroll,
-  },
+  components: {},
   name: "endk-section-colleccion",
   data() {
     return {};

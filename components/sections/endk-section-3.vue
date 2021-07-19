@@ -49,7 +49,7 @@
 @media screen and (max-width: 1024px) {
   .endk-section-3 {
     width: 100%;
-    height: 100%;
+    height: auto;
     box-sizing: border-box;
     padding-top: 35px;
     padding-left: 35px;
@@ -58,6 +58,8 @@
     background-image: url("~/assets/img/bg_section3_m.png");
     background-position: top right;
     background-size: 160%;
+    background-repeat: no-repeat;
+    padding-bottom: 70px;
     .line {
       display: none;
     }

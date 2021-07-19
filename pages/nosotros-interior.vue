@@ -121,6 +121,79 @@
     }
   }
 }
+
+@media screen and (max-width: 580px) {
+  .nosotros-interior {
+    .nosotros-layout-interior {
+      .nosotros-interior-left {
+        overflow-x: hidden;
+        width: 100%;
+        padding-left: 35px;
+        padding-right: 35px;
+        height: calc(75vh - 71px);
+        top: 71px;
+        .pin-title {
+          position: sticky;
+          top: 0px;
+          h4 {
+            white-space: nowrap;
+          }
+          &.f1 {
+            top: 0px;
+          }
+
+          &.f2 {
+            top: 0px;
+          }
+          &.f3 {
+            top: 0px;
+          }
+          &.f4 {
+            top: 0px;
+          }
+          &.f5 {
+            top: 0px;
+          }
+          &.fixed {
+            width: 140%;
+          }
+        }
+
+        .logos {
+          width: 100%;
+          display: inline-block;
+          grid-template-columns: 1.5fr 2fr 0.9fr;
+          figure {
+            display: block;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+            img {
+              width: 100%;
+            }
+          }
+        }
+      }
+      .nosotros-interior-right {
+        width: 100%;
+        height: 25vh;
+        left: 0px;
+        top: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background-image: url("~/assets/img/bg_side_nosotros_mobile.jpg");
+
+        button.button {
+          max-width: 135px;
+          width: 135px;
+        }
+      }
+    }
+  }
+}
 </style>
 <template>
   <div class="nosotros-interior interior">
@@ -344,9 +417,15 @@ export default {
     this.showMainLayout();
   },
   computed: {
+    dektop() {
+      return !this.$store.getters["device/getDevice"].isMobile;
+    },
     fixed1() {
       if (this.init) {
         return false;
+      }
+      if (!this.dektop) {
+        return this.p1 === 71;
       }
       return Number(this.p1) < 1;
     },
@@ -354,11 +433,17 @@ export default {
       if (this.init) {
         return false;
       }
+      if (!this.dektop) {
+        return this.p1 === 71;
+      }
       return Number(this.p2) < 49;
     },
     fixed3() {
       if (this.init) {
         return false;
+      }
+      if (!this.dektop) {
+        return this.p1 === 71;
       }
       return Number(this.p3) < 97;
     },
@@ -366,11 +451,17 @@ export default {
       if (this.init) {
         return false;
       }
+      if (!this.dektop) {
+        return this.p1 === 71;
+      }
       return Number(this.p4) < 145;
     },
     fixed5() {
       if (this.init) {
         return false;
+      }
+      if (!this.dektop) {
+        return this.p1 === 71;
       }
       return Number(this.p5) < 194;
     },
@@ -393,6 +484,11 @@ export default {
       this.p3 = qt3.getBoundingClientRect().y;
       this.p4 = qt4.getBoundingClientRect().y;
       this.p5 = qt5.getBoundingClientRect().y;
+      console.log("this.p1", this.p1);
+      console.log("this.p2", this.p2);
+      console.log("this.p3", this.p3);
+      console.log("this.p4", this.p4);
+      console.log("this.p5", this.p5);
     },
     onChange(e) {
       console.log("e", e);

@@ -122,6 +122,7 @@
           list-style: none;
           display: inline-block;
           margin-bottom: 27px;
+          font-family: "Open Sans", sans-serif !important;
 
           &.endk-logo-mobile {
             display: none;
@@ -134,6 +135,7 @@
             color: #555555;
             text-decoration: none;
             font: normal normal bold 20px/16px Open Sans;
+            font-family: "Open Sans", sans-serif !important;
           }
         }
 
@@ -331,7 +333,9 @@
               >
             </li>
             <li>
-              <NuxtLink to="/contacto">06. Contacto</NuxtLink>
+              <NuxtLink to="/contacto" v-on:click.native="isOpen = false"
+                >06. Contacto</NuxtLink
+              >
             </li>
 
             <li class="endk-close-menu-mobile">
