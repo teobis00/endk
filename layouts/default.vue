@@ -424,10 +424,6 @@ export default {
       return this.$store.getters["app/getDetalleColeccionOpen"];
     },
     scrollX() {
-      console.log(
-        'this.$store.getters["app/getX"]',
-        this.$store.getters["app/getX"]
-      );
       return this.$store.getters["app/getX"];
     },
   },

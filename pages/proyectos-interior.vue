@@ -63,7 +63,7 @@
       z-index: 40;
       h2 {
         z-index: ;
-        margin-top: 34px;
+        margin-top: 1vh;
         // prettier-ignore
         transition: opacity 800ms cubic-bezier(0.33, 1, 0.68, 1), transform 800ms cubic-bezier(0.33, 1, 0.68, 1);
         transform: translateY(0);
@@ -1118,7 +1118,13 @@ export default {
         : { "overflow-y": "auto" };
     },
     dektop() {
-      return Number(window.innerWidth) > 580;
+      try {
+        if (window) {
+          return Number(window.innerWidth) > 580;
+        }
+      } catch (e) {}
+
+      return true;
     },
     catalogo() {
       return this.$store.getters["proyectos/getCatalogo"];
@@ -1447,7 +1453,7 @@ export default {
       if (this.lyDetalle) {
         this.setMotionDetalle();
         /*setTimeout(() => {
-          
+
         }, 800);*/
         console.log("volver");
         window.history.pushState(

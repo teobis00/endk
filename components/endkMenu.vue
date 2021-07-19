@@ -324,15 +324,11 @@
     <!-- style="transform:matrix(1, 0, 0, 1, -100, 0)"> -->
     <!--   Overlay -->
     <XyzTransition xyz="fade">
-      <div
-        class="endk-menu-overlay"
-        v-if="isOpen"
-        v-on:click="isOpen = false"
-      ></div>
+      <div class="endk-menu-overlay" v-if="isOpen" v-on:click="openMenu"></div>
     </XyzTransition>
     <!-- / Overlay -->
     <div class="endk-menu-container" :class="{ open: isOpen }">
-      <div class="marker-section-scroll" ref="ov">
+      <div class="marker-section-scroll" ref="ov" v-if="showMarker">
         <div class="overflower">
           <div class="pminicio pmarker">
             <h1></h1>
@@ -367,7 +363,7 @@
         <div class="sep"></div>
 
         <div class="endk-close-button">
-          <button v-on:click="isOpen = false">
+          <button v-on:click="openMenu">
             <v-icon scale="1.4" :name="'cerrar'" />
           </button>
         </div>
@@ -458,6 +454,7 @@ export default {
     return {
       tshowMenu: false,
       isOpen: false,
+      showMarker: true,
     };
   },
   computed: {
@@ -469,6 +466,16 @@ export default {
   methods: {
     openMenu() {
       this.isOpen = !this.isOpen;
+      console.log("isOpen", this.isOpen);
+      if (this.isOpen) {
+        this.showMarker = false;
+      } else {
+        this.showMarker = true;
+
+        setTimeout(() => {
+          this.$refs.ov.scrollLeft = this.sLeft;
+        }, 700);
+      }
     },
     linkto() {
       this.$router.push("/coleccion");
@@ -479,7 +486,9 @@ export default {
   },
   watch: {
     sLeft(n) {
-      this.$refs.ov.scrollLeft = n;
+      if (this.$refs.ov) {
+        this.$refs.ov.scrollLeft = n;
+      }
     },
     showMenu(n) {
       setTimeout(() => {

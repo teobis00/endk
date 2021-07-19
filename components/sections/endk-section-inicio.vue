@@ -77,7 +77,7 @@
 
 @media screen and (max-width: 1024px) {
   .endk-section-inicio {
-    background-image: url("~/assets/img/m_bg_main_inicio.png");
+    background-image: url("~/assets/img/m_bg_main_inicio.jpg");
     background-position: center center;
 
     .endk-inicio-figure-info {
@@ -189,7 +189,7 @@
         Casa Pérez Maggi, <br />2020. Arquitectura Mathias Klotz.
       </div>
     </XyzTransition>
-    <img v-if="removeImage" src="~/assets/img/bg_main_inicio.png" alt="" />
+    <img v-if="removeImage" src="~/assets/img/bg_main_inicio.jpg" alt="" />
     <div class="endk-lain-inicio">
       <div class="sep"></div>
       <div class="endk-info">

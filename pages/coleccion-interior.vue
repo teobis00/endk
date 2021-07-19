@@ -233,7 +233,7 @@
       position: absolute;
       right: 0px;
       top: 0px;
-      background-image: url("~/assets/img/side_foto.png");
+      background-image: url("~/assets/img/side_foto.jpg");
       background-size: cover;
       background-position: 50%;
     }

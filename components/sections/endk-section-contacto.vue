@@ -468,7 +468,7 @@
           <li class="align">
             <v-icon name="ws" scale="1.3" v-on:click="qr = !qr" />
             <span v-on:click="qr = !qr">+56 9 3458 6940</span>
-            <a href="https://wa.me/+56934586940" target="_blank"
+            <a href="https://wa.me/+56934586940" rel="noopener" target="_blank"
               >+56 9 3458 6940</a
             >
           </li>
@@ -477,11 +477,11 @@
             <a
               class="showdesk"
               href="https://wa.me/+56934586940"
+              rel="noopener"
               target="_blank"
-              >click aquí</a
+              >click aquí para abrir whatsapp</a
             >
-            para abrir whatsapp en tu computador o escanea el código para abrir
-            WhatsApp en tu Móvil
+            en tu computador o escanea el código para abrir WhatsApp en tu Móvil
             <XyzTransition xyz="fade narrow-5 small-5">
               <div class="qr" v-show="qr">
                 <v-icon name="qr" scale="11" />
