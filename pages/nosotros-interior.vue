@@ -418,7 +418,7 @@ export default {
   },
   computed: {
     dektop() {
-      return !this.$store.getters["device/getDevice"].isMobile;
+      return Number(window.innerWidth) > 580;
     },
     fixed1() {
       if (this.init) {

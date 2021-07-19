@@ -520,7 +520,7 @@ export default {
   data() {
     return {
       qr: false,
-      showOverlay: true,
+      showOverlay: false,
       revealInfo: false,
       numbers: {
         percent: 0,

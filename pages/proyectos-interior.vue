@@ -1118,7 +1118,7 @@ export default {
         : { "overflow-y": "auto" };
     },
     dektop() {
-      return !this.$store.getters["device/getDevice"].isMobile;
+      return Number(window.innerWidth) > 580;
     },
     catalogo() {
       return this.$store.getters["proyectos/getCatalogo"];
