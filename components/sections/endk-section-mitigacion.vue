@@ -443,7 +443,11 @@
             estar en un estado ambiental superior mundialmente.
           </p>
 
-          <button class="button" dc="Descargar Informe">
+          <button
+            class="button"
+            dc="Descargar Informe"
+            v-on:click="downloadCatalogo()"
+          >
             Descargar Informe
           </button>
         </div>
@@ -633,6 +637,10 @@ export default {
       // this.bar.set(n / 100);
     },
   },
-  methods: {},
+  methods: {
+    downloadCatalogo() {
+      window.open("/Certificado_GEI_Endemik_ES.pdf", "Download");
+    },
+  },
 };
 </script>

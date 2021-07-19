@@ -32,6 +32,58 @@
     will-change: width;
     position: relative;
     z-index: 100;
+
+    .marker-section-scroll {
+      width: 70px;
+      height: 500px;
+      position: absolute;
+      left: 0px;
+      top: 25%;
+      overflow-x: scroll;
+      .overflower {
+        width: 1030vw;
+        height: 500px;
+        display: flex;
+        .pmarker {
+          h1 {
+            color: #7f7b6b;
+            position: sticky;
+            left: 0px;
+            width: 300px;
+            transform: rotate(-90deg) translateY(-117px) translateX(-120px);
+            font-family: "Open Sans", sans-serif;
+            text-align: center;
+            margin-right: -200px;
+          }
+        }
+        .pminicio {
+          width: 101vw;
+          height: 100%;
+          position: relative;
+        }
+        .pmcollection {
+          width: 100vw;
+          height: 100%;
+        }
+        .pmsection3 {
+          width: 80vw;
+          height: 100%;
+        }
+        .pmproyectos {
+          width: 290vw;
+          height: 100%;
+        }
+        .pmsep {
+          width: 10vw;
+          height: 100%;
+        }
+        .pmmitigacion {
+          width: 260vw;
+          height: 100%;
+        }
+      }
+    }
+
     &.open {
       width: 420px;
       .endk-menu-controls {
@@ -220,7 +272,9 @@
     .endk-menu-container {
       width: 0vw;
       height: 100vh;
-
+      .marker-section-scroll {
+        display: none;
+      }
       .endk-menu-link {
         width: 320px;
         ul {
@@ -278,6 +332,27 @@
     </XyzTransition>
     <!-- / Overlay -->
     <div class="endk-menu-container" :class="{ open: isOpen }">
+      <div class="marker-section-scroll" ref="ov">
+        <div class="overflower">
+          <div class="pminicio pmarker">
+            <h1></h1>
+          </div>
+          <div class="pmcollection pmarker">
+            <h1>Coleccion</h1>
+          </div>
+          <div class="pmsection3 pmarker">
+            <h1></h1>
+          </div>
+          <div class="pmproyectos pmarker">
+            <h1>Proyectos</h1>
+          </div>
+          <div class="pmsep"></div>
+          <div class="pmmitigacion pmarker">
+            <h1>Sustentabilidad</h1>
+          </div>
+        </div>
+      </div>
+
       <div class="endk-menu-controls">
         <div class="endk-menu-button">
           <button v-on:click="openMenu">
@@ -385,13 +460,17 @@ export default {
       isOpen: false,
     };
   },
+  computed: {
+    sLeft() {
+      return this.$store.getters["app/getX"] - 70;
+    },
+  },
   props: ["showMenu", "scrollX"],
   methods: {
     openMenu() {
       this.isOpen = !this.isOpen;
     },
     linkto() {
-      console.log("ya poh");
       this.$router.push("/coleccion");
     },
     gotoScroll(s) {
@@ -399,6 +478,9 @@ export default {
     },
   },
   watch: {
+    sLeft(n) {
+      this.$refs.ov.scrollLeft = n;
+    },
     showMenu(n) {
       setTimeout(() => {
         this.tshowMenu = true;

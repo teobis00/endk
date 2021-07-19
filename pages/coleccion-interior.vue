@@ -269,7 +269,7 @@
         box-sizing: border-box;
         padding-top: 88px;
         width: 100%;
-
+        height: auto;
         .endk-top-navbar {
           grid-template-columns: 1fr;
           .button {
@@ -283,7 +283,9 @@
           }
         }
         .place-media {
-          height: 35%;
+          width: 100vw;
+          height: 280px;
+          margin-left: -23px;
         }
         .place-desc {
           p.desc {

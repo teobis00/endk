@@ -410,6 +410,8 @@ export default {
       }, 1800);
     }
     /* ------------------------------------- */
+
+    this.nl = false;
   },
   computed: {
     p1() {
@@ -422,6 +424,10 @@ export default {
       return this.$store.getters["app/getDetalleColeccionOpen"];
     },
     scrollX() {
+      console.log(
+        'this.$store.getters["app/getX"]',
+        this.$store.getters["app/getX"]
+      );
       return this.$store.getters["app/getX"];
     },
   },
@@ -445,7 +451,6 @@ export default {
       });
     },
     gotoScroll(s) {
-      console.log("s", s);
       const ww = this.$store.getters["app/getWindowWidth"];
 
       let pos = ww > 1024 ? this.$refs[s].offsetLeft : this.$refs[s].offsetTop;

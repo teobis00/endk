@@ -211,7 +211,12 @@
         </div>
         <div class="aux-button">
           <XyzTransition class="ovxyz-inicio-button">
-            <button class="button" dc="Conócenos" v-if="tstartAnim3">
+            <button
+              class="button"
+              dc="Conócenos"
+              v-if="tstartAnim3"
+              v-on:click="goNosotros()"
+            >
               Conócenos
             </button>
           </XyzTransition>
@@ -326,6 +331,9 @@ export default {
     },
   },
   methods: {
+    goNosotros() {
+      this.$router.push("/nosotros");
+    },
     handleMouseEnter(e) {
       const config = {
         stop: true,
