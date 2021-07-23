@@ -288,10 +288,11 @@
           position: relative;
           left: 0px;
           top: 0px;
-          clip-path: inset(0% 0% 0% 0%);
+          clip-path: inset(0% 0% -30% 0%);
           font-size: 51px;
           line-height: 51px;
           text-align: right;
+          margin-bottom: 10px;
         }
       }
       .info-seccion {
